@@ -13,6 +13,8 @@ cd backend
 source venv/bin/activate
 python3 manage.py runserver
 ```
+##### Admin dashboard
+`localhost:8000/admin`
 
 ### Adding new module to backend
 Create new app (module)
