@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+    # frontend:
+    #     image:
+    #     # The image is built default as port 80
+    #     ports:
+    #       - "3000:80"
+    #     networks:
+    #       - proxy
+    #     env_file:
+    #       - frontend.env
+    #     depends_on:
+    #       - backend
+
+    backend:
+        image: jeremu2907/cs4347:backend
+        ports:
+          - "8000:8000"
+        networks:
+          - proxy
+        # env_file:
+        #   - backend.env
+        command: >
+          sh -c "python manage.py runserver 0.0.0.0:8000 --noreload"
+networks:
+    proxy:
+        external: true
