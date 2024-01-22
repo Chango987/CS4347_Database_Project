@@ -15,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     is_leader = models.BooleanField(default=False, blank=True)
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=False,)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=False, primary_key=True)
     objects = UsersManager()
 
     USERNAME_FIELD = "email"  # Use 'email' as the unique identifier for authentication
