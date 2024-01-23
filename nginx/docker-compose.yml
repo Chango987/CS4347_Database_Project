@@ -1,0 +1,15 @@
+version: '3.6'
+
+services:
+  web:
+    image: nginx
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+    - "80:80"
+    networks:
+    - proxy
+
+networks:
+  proxy:
+    external: true
