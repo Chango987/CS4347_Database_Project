@@ -1,2 +1,3 @@
 django
 django-jazzmin
+python-dotenv
