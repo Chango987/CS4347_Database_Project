@@ -15,6 +15,8 @@ python3 manage.py runserver
 ```
 ##### Admin dashboard
 `localhost:8000/admin`
+username: `admin@admin.admin`
+password: `admin`
 
 ### Adding new module to backend
 Create new app (module)
