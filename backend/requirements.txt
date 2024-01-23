@@ -2,3 +2,4 @@ django
 django-jazzmin
 python-dotenv
 psycopg2-binary
+djangorestframework-simplejwt
