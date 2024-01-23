@@ -14,7 +14,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
-    is_leader = models.BooleanField(default=False, blank=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=False, primary_key=True)
     objects = UsersManager()
 
