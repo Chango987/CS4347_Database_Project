@@ -7,12 +7,20 @@ On first time running the backend, you need to set up your python virtual enviro
 python3 -m venv venv
 ```
 
+##### Installing new packages
+```bash
+pip install -r requirements.txt
+```
+
 ### Running backend
 ```bash
 cd backend
 source venv/bin/activate
 python3 manage.py runserver
 ```
+
+*Note:* If you run into any *cannot find package* error, install the latest packages since another person might have added a package. See **Installing new packages**.
+
 ##### Admin dashboard
 `localhost:8000/admin`
 username: `admin@admin.admin`
@@ -42,8 +50,10 @@ INSTALLED_APPS = [
 Modifying models requires migrating the change to database
 ```bash
 python3 manage.py makemigrations
-python3 manage.py migrate
+./migrateToDB.bash
 ```
+
+`migrateToDB.bash` saves all changes to the DB tables/schemas to DB_SCHEMA_MODIFY.log
 
 ## FRONTEND
 ```bash

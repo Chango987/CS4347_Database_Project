@@ -158,11 +158,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '{asctime} {message}',    #adding date in front of log messages
+            'style': '{',
+        },
+    },
     'handlers': {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'sql.log',
+            'formatter': 'default',
+            'delay': True,     #controls whether sql.log will reset every run
         },
     },
     'loggers': {
