@@ -46,7 +46,6 @@ CORS_ALLOW_HEADERS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -99,6 +98,7 @@ DATABASES = {
         "USER": os.getenv("DATABASE_USER", "postgres.xdcipgavlrwizskuwcln"),
         "PASSWORD": os.getenv("DATABASE_PASSWORD", None),
         "PORT": os.getenv("DATABASE_PORT", "6543"),
+        "DISABLE_SERVER_SIDE_CURSORS": True
     }
 }
 
@@ -154,3 +154,22 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'sql.log',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

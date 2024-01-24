@@ -1,5 +1,4 @@
-django
-django-jazzmin
+django==4.*
 python-dotenv
 psycopg2-binary
 djangorestframework-simplejwt
