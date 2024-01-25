@@ -29,6 +29,7 @@ SECRET_KEY = 'django-insecure-l_4fj*#h5c(xa+(ud8i2*-9m680+fm@vy=u970zsps7w^*#ap9
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["*.jeremynguyen.dev"]
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 CORS_ALLOW_HEADERS = [
     "accept",
