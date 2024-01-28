@@ -22,3 +22,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+
+class UserPortfolio(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    small_cap_percentage = models.FloatField()
+    medium_cap_percentage = models.FloatField()
+    large_cap_percentage = models.FloatField()
+
+
+class UserPortfolioActual(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    small_cap_percentage = models.FloatField()
+    medium_cap_percentage = models.FloatField()
+    large_cap_percentage = models.FloatField()
+
