@@ -31,4 +31,4 @@ jobs:
           context: ./pricebot
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/cs4347:pricebot
-          file: ./backend/Dockerfile.pricebot
+          file: ./pricebot/Dockerfile.pricebot
