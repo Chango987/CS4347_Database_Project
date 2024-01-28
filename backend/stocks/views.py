@@ -54,6 +54,7 @@ class ViewUserStocks(APIView):
         """
         with connection.cursor() as cursor:
             cursor.execute(sql_statement, [user.id, data['stocks_id']])
+        connection.commit()
         
         return Response(status=status.HTTP_201_CREATED)
     
@@ -68,6 +69,7 @@ class ViewUserStocks(APIView):
         """
         with connection.cursor() as cursor:
             cursor.execute(sql_statement, [user.id, data['stocks_id']])
+        connection.commit()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 

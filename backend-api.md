@@ -39,3 +39,16 @@ param: {
     stocks_id
 }
 ```
+
+### /stocks_suggestions/
+POST: auth
+```
+data: {
+    cap_size_portfolio: {
+        large_cap,
+        mid_cap,
+        small_cap
+    },
+    buying_power,
+}
+```

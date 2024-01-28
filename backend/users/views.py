@@ -2,7 +2,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers
-from rest_framework import authentication, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from django.contrib.auth.hashers import make_password, check_password
@@ -62,6 +61,7 @@ class ViewUsers(APIView):
 
         with connection.cursor() as cursor:
             cursor.execute(sql_statement, [email, password, first_name, last_name])
+        connection.commit()
 
         return Response(status=status.HTTP_201_CREATED)
     
