@@ -1,6 +1,7 @@
 import psycopg2
 import os
 import dotenv
+import sched, time
 
 dotenv.load_dotenv()
 
@@ -21,18 +22,37 @@ try:
     # display the PostgreSQL database server version
     db_version = cur.fetchone()
     print(db_version)
-
-    cur.execute('SELECT * FROM users_user')
-    result = cur.fetchall()
-    print(result)
-
-    # close the communication with the PostgreSQL
+    print("CONNECTION TO DB ESTABLISHED")
     cur.close()
 
 except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-finally:
+    print(error)
     if conn is not None:
         conn.close()
         print('Database connection closed.')
+    
+    exit()
 
+def bot(scheduler):
+    scheduler.enter(60, 1, bot, (scheduler,))
+    try:
+        print("NEXT UPDATE ITERATION")
+        # Open connection
+        cur = conn.cursor()
+        
+        # Main api fetching and update logic here
+
+        # Close connection
+        cur.close()
+    except(Exception, psycopg2.DatabaseError) as error:
+        print("STOCK PRICE UPDATE FAILURE")
+        print(error)
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+        
+        exit()
+
+my_scheduler = sched.scheduler(time.time, time.sleep)
+my_scheduler.enter(60, 1, bot, (my_scheduler,))
+my_scheduler.run()
