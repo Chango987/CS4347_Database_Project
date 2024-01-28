@@ -1,2 +1,4 @@
 
                 AND pg_catalog.pg_table_is_visible(c.oid)
+2024-01-28 07:43:15,572 (0.039) INSERT INTO "django_migrations" ("app", "name", "applied") VALUES ('users', '0004_alter_user_is_superuser', '2024-01-28T07:43:15.533353+00:00'::timestamptz) RETURNING "django_migrations"."id"; args=('users', '0004_alter_user_is_superuser', datetime.datetime(2024, 1, 28, 7, 43, 15, 533353, tzinfo=datetime.timezone.utc)); alias=default
+2024-01-28 07:45:35,151 (0.048) INSERT INTO "django_migrations" ("app", "name", "applied") VALUES ('users', '0005_alter_user_is_superuser', '2024-01-28T07:45:35.102514+00:00'::timestamptz) RETURNING "django_migrations"."id"; args=('users', '0005_alter_user_is_superuser', datetime.datetime(2024, 1, 28, 7, 45, 35, 102514, tzinfo=datetime.timezone.utc)); alias=default
