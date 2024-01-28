@@ -44,12 +44,25 @@ class ViewUsers(APIView):
         last_name = data['last_name']
         password = make_password(data['password'])
         
-        User.objects.create(
-            email=email,
-            first_name=first_name,
-            last_name=last_name,
-            password=password
-        )
+        sql_statement = f"""
+            insert into users_user (
+                email,
+                password,
+                first_name,
+                last_name,
+                date_joined,
+                is_staff,
+                is_active,
+                is_superuser,
+                id
+            )
+            values
+                (%s, %s, %s, %s, now(), false, true, false, gen_random_uuid())
+        """
+
+        with connection.cursor() as cursor:
+            cursor.execute(sql_statement, [email, password, first_name, last_name])
+
         return Response(status=status.HTTP_201_CREATED)
     
 
