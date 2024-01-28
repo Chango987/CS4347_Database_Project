@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'users'
+    'users',
+    'stocks'
 ]
 
 MIDDLEWARE = [
@@ -128,7 +129,14 @@ REST_FRAMEWORK = {
     )
 }
 
-ACCESS_TOKEN_LIFETIME = timedelta(minutes=5)
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer"),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+JWT_AUTH = {
+    "JWT_AUTH_HEADER_PREFIX": "Token"
+}
 
 AUTH_USER_MODEL = "users.User"
 
