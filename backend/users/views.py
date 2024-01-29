@@ -63,6 +63,7 @@ class ViewUsers(APIView):
 
         with connection.cursor() as cursor:
             cursor.execute(sql_statement, [email, password, first_name, last_name])
+        connection.commit()
 
         return Response(status=status.HTTP_201_CREATED)
     
