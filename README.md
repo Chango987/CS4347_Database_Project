@@ -1,5 +1,9 @@
 # User Manual
+___
 
+## API Docs
+[API docs here](https://github.com/Chango987/CS4347_Database_Project/blob/main/backend-api.md)
+___
 ## BACKEND
 ### Setting up backend
 On first time running the backend, you need to set up your python virtual environment
