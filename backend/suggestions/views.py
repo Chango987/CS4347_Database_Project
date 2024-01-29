@@ -1,14 +1,27 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from django.db import connection
 import json
 
-from users.models import User
 from stocks.models import Stock, UserStocks
-from stocks.views import UserStockSerializer
+from stocks.views import UserStockSerializer, StocksSerializer
+
+from .models import StockSuggestion
+
+class StockSuggestionSerializer(serializers.ModelSerializer):
+    stock = StocksSerializer
+
+    class Meta:
+        model = StockSuggestion
+        fields = [
+            'stock',
+            'iteration',
+            'shares',
+            'price_per_share',
+            'creation_time',
+        ]
 
 class ViewStocksSuggestions(APIView):
     permission_classes = [IsAuthenticated]
@@ -87,3 +100,17 @@ class ViewStocksSuggestions(APIView):
 
         return Response(final_list)
 
+    def get(self, request, format=None):
+        user = request.user
+        suggested_info = StockSuggestion.objects.raw(
+            f"""
+                SELECT * FROM suggestions_stocksuggestion
+                WHERE user_id = %s
+                ORDER BY creation_time DESC
+            """,
+            [user.id]
+        )
+
+        suggested_info = StockSuggestionSerializer(suggested_info, many=True).data
+
+        return Response(suggested_info)

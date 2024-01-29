@@ -7,7 +7,6 @@ from rest_framework import status
 from django.db import connection
 
 from .models import Stock, UserStocks
-from users.views import UsersSerializer
 
 
 class StocksSerializer(serializers.ModelSerializer):

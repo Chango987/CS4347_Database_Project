@@ -41,6 +41,8 @@ param: {
 ```
 
 ### /stocks_suggestions/
+GET: auth
+
 POST: auth
 ```
 data: {
