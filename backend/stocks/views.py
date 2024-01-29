@@ -7,7 +7,6 @@ from rest_framework import status
 from django.db import connection
 
 from .models import Stock, UserStocks
-from users.views import UsersSerializer
 
 
 class StocksSerializer(serializers.ModelSerializer):
@@ -54,6 +53,7 @@ class ViewUserStocks(APIView):
         """
         with connection.cursor() as cursor:
             cursor.execute(sql_statement, [user.id, data['stocks_id']])
+        connection.commit()
         
         return Response(status=status.HTTP_201_CREATED)
     
@@ -68,6 +68,7 @@ class ViewUserStocks(APIView):
         """
         with connection.cursor() as cursor:
             cursor.execute(sql_statement, [user.id, data['stocks_id']])
+        connection.commit()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 

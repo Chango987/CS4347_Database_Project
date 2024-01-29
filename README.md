@@ -30,7 +30,7 @@ password: `admin`
 Create new app (module)
 ```bash
 cd backend
-python3 startapp [APP_NAME]
+python3 manage.py startapp [APP_NAME]
 ```
 
 then in backend/settings.py, register our new module
