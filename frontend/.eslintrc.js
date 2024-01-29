@@ -1,4 +1,9 @@
 module.exports = {
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
     'ignorePatterns': ['build/*', 'public/*'],
     'env': {
         'es2021': true,
