@@ -60,6 +60,13 @@ python3 manage.py makemigrations
 `migrateToDB.bash` saves all changes to the DB tables/schemas to DB_SCHEMA_MODIFY.log
 
 ## FRONTEND
+### Setting up
+```bash
+cd frontend
+npm install
+```
+
+### Running
 ```bash
 cd frontend
 npm start
