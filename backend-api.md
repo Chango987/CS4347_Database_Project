@@ -46,6 +46,32 @@ param: {
 }
 ```
 
+### /user_portfolio/
+Endpoint to access and modify user portfolio spread
+
+GET: auth
+
+POST: auth
+```
+data: {
+    small_cap_percentage,
+    medium_cap_percentage,
+    large_cap_percentage
+}
+```
+
+PATCH: auth
+```
+data: {
+    small_cap_percentage,
+    medium_cap_percentage,
+    large_cap_percentage
+}
+```
+
+### /user_portfolio_actual/
+GET: auth
+
 ### /stocks_suggestions/
 Endpoint to get suggested stocks and history
 
