@@ -125,13 +125,16 @@ class ViewUserPortfolio(APIView):
         medium_cap_percentage = data['medium_cap_percentage']
         large_cap_percentage = data['large_cap_percentage']
 
-        portfolio = UserPortfolio.objects.raw("SELECT * FROM users_userportfolio WHERE user_id = %s", [user.id])[0]
+        sql_statement = f"""
+            UPDATE users_userportfolio 
+            SET small_cap_percentage = %s,
+                medium_cap_percentage = %s,
+                large_cap_percentage = %s
+            WHERE user_id = %s
+        """
         
-        portfolio.small_cap_percentage = small_cap_percentage
-        portfolio.medium_cap_percentage = medium_cap_percentage
-        portfolio.large_cap_percentage = large_cap_percentage
-
-        portfolio.save()
+        with connection.cursor() as cursor:
+            cursor.execute(sql_statement, [small_cap_percentage, medium_cap_percentage, large_cap_percentage, user.id])
 
         return Response(status=status.HTTP_200_OK)
     
