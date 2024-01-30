@@ -3,7 +3,8 @@ import axios from 'axios';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
   });
@@ -16,9 +17,21 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // form validation
+    if (
+      !formData.first_name ||
+      !formData.last_name ||
+      !formData.email ||
+      !formData.password
+    ) {
+      console.error('Please fill in all fields.');
+      return;
+    }
+
     try {
-      const response = await axios.post('sign up api url here', {
-        username: formData.username,
+      const response = await axios.post('your-api-url-here', {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
         email: formData.email,
         password: formData.password,
       });
@@ -38,14 +51,27 @@ const Signup = () => {
         <label>
           <input
             type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
+            name="first_name"
+            placeholder="First name"
+            value={formData.first_name}
             onChange={handleInputChange}
             className="inputField"
           />
         </label>
         <br />
+
+        <label>
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last name"
+            value={formData.last_name}
+            onChange={handleInputChange}
+            className="inputField"
+          />
+        </label>
+        <br />
+
         <label>
           <input
             type="email"
@@ -57,6 +83,7 @@ const Signup = () => {
           />
         </label>
         <br />
+
         <label>
           <input
             type="password"
@@ -68,6 +95,7 @@ const Signup = () => {
           />
         </label>
         <br />
+
         <button type="submit" className="submitButton">
           Register
         </button>

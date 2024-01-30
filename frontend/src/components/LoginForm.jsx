@@ -15,6 +15,12 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    //form validation
+    if (!credentials.username || !credentials.password) {
+      console.error('Please fill in all fields.');
+      return;
+    }
+
     try {
       const response = await axios.get('login api url here', {
         params: {
