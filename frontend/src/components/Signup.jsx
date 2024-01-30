@@ -1,5 +1,5 @@
-// Signup.js
 import { useState } from 'react';
+import axios from 'axios';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,9 +13,22 @@ const Signup = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+
+    try {
+      const response = await axios.post('sign up api url here', {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Assuming the API returns some data upon successful signup
+      console.log('Signup successful!', response.data);
+    } catch (error) {
+      console.error('Signup failed!', error);
+      // Handle signup failure
+    }
   };
 
   return (

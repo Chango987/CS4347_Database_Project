@@ -1,13 +1,48 @@
+import { useState } from 'react';
+import axios from 'axios';
+
 const LoginForm = () => {
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: '',
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials({ ...credentials, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.get('login api url here', {
+        params: {
+          email: credentials.username,
+          password: credentials.password,
+        },
+      });
+
+      // Assuming the API returns some data upon successful login
+      console.log('Login successful!', response.data);
+    } catch (error) {
+      console.error('Login failed!', error);
+      // Handle login failure
+    }
+  };
+
   return (
     <div className="formContainer">
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <h1>Login</h1>
         <div className="input-box">
           <input
             className="inputField"
             type="text"
             placeholder="Username"
+            name="username"
+            value={credentials.username}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -16,6 +51,9 @@ const LoginForm = () => {
             className="inputField"
             type="password"
             placeholder="Password"
+            name="password"
+            value={credentials.password}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -24,7 +62,7 @@ const LoginForm = () => {
             <input type="checkbox" />
             Remember me
           </label>
-          <a href="#"> Forgot Password?</a>
+          <a href="#">Forgot Password?</a>
         </div>
         <button className="submitButton" type="submit">
           Login
@@ -38,4 +76,5 @@ const LoginForm = () => {
     </div>
   );
 };
+
 export default LoginForm;
