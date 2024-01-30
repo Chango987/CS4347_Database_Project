@@ -1,86 +1,83 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { backendURL } from '../utils';
 
 const LoginForm = () => {
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: '',
-  });
+    const [credentials, setCredentials] = useState({
+        username: '',
+        password: '',
+    });
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
-  };
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setCredentials({ ...credentials, [name]: value });
+    };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    //form validation
-    if (!credentials.username || !credentials.password) {
-      console.error('Please fill in all fields.');
-      return;
-    }
+        // form validation
+        if (!credentials.username || !credentials.password) {
+            console.error('Please fill in all fields.');
+            return;
+        }
 
-    try {
-      const response = await axios.get('login api url here', {
-        params: {
-          email: credentials.username,
-          password: credentials.password,
-        },
-      });
+        const url = `${backendURL}/user/?email=${credentials.username}&password=${credentials.password}`;
+        try {
+            const response = await axios.get(url);
 
-      // Assuming the API returns some data upon successful login
-      console.log('Login successful!', response.data);
-    } catch (error) {
-      console.error('Login failed!', error);
-      // Handle login failure
-    }
-  };
+            // Assuming the API returns some data upon successful login
+            console.log('Login successful!', response.data);
+        } catch (error) {
+            console.error('Login failed!', error);
+            // Handle login failure
+        }
+    };
 
-  return (
-    <div className="formContainer">
-      <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <div className="input-box">
-          <input
-            className="inputField"
-            type="text"
-            placeholder="Username"
-            name="username"
-            value={credentials.username}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="input-box">
-          <input
-            className="inputField"
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={credentials.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="remember-forgot">
-          <label>
-            <input type="checkbox" />
+    return (
+        <div className="formContainer">
+            <form onSubmit={handleSubmit}>
+                <h1>Login</h1>
+                <div className="input-box">
+                    <input
+                        className="inputField"
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        value={credentials.username}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
+                <div className="input-box">
+                    <input
+                        className="inputField"
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        value={credentials.password}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
+                <div className="remember-forgot">
+                    <label>
+                        <input type="checkbox" />
             Remember me
-          </label>
-          <a href="#">Forgot Password?</a>
-        </div>
-        <button className="submitButton" type="submit">
+                    </label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button className="submitButton" type="submit">
           Login
-        </button>
-        <div className="register-link">
-          <p>
+                </button>
+                <div className="register-link">
+                    <p>
             Don&apos;t have an account? <a href="#">Signup</a>
-          </p>
+                    </p>
+                </div>
+            </form>
         </div>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default LoginForm;
