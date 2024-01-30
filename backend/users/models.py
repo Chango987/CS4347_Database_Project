@@ -14,7 +14,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=False, primary_key=True)
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=False, primary_key=True)
     objects = UsersManager()
 
     USERNAME_FIELD = "email"  # Use 'email' as the unique identifier for authentication
@@ -22,3 +22,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+
+class UserPortfolio(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    small_cap_percentage = models.FloatField()
+    medium_cap_percentage = models.FloatField()
+    large_cap_percentage = models.FloatField()
+
+
+class UserPortfolioActual(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    small_cap_percentage = models.FloatField()
+    medium_cap_percentage = models.FloatField()
+    large_cap_percentage = models.FloatField()
+
