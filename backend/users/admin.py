@@ -12,6 +12,9 @@ class UsersAdmin(admin.ModelAdmin):
         'is_superuser',
     )
 
-admin.site.register(UserPortfolio)
+class PortfolioAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in UserPortfolio._meta.get_fields()]
+
+admin.site.register(UserPortfolio, PortfolioAdmin)
 admin.site.register(User, UsersAdmin)
-admin.site.register(UserPortfolioActual)
+admin.site.register(UserPortfolioActual, PortfolioAdmin)
