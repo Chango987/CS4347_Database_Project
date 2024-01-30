@@ -1,33 +1,35 @@
 module.exports = {
-  ignorePatterns: ['build/*', 'public/*'],
-  env: {
-    es2021: true,
-    node: true,
-    browser: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-  ],
-  overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: ['.eslintrc.{js,cjs}'],
-      parserOptions: {
-        sourceType: 'script',
-      },
+    settings: {
+        react: {
+            version: 'detect',
+        },
     },
-  ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true, // Enable JSX parsing
+    'ignorePatterns': ['build/*', 'public/*'],
+    'env': {
+        'es2021': true,
+        'node': true,
+        'browser': true,
     },
-  },
+    'extends': [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:react/jsx-runtime',
+    ],
+    'overrides': [{
+        'env': {
+            'node': true,
+        },
+        'files': [
+            '.eslintrc.{js,cjs}',
+        ],
+        'parserOptions': {
+            'sourceType': 'script',
+        },
+    } ],
+    'parserOptions': {
+        'ecmaVersion': 'latest',
+        'sourceType': 'module',
+    },
   plugins: ['react'],
   rules: {
     indent: 'off', // Disable the indent rule
