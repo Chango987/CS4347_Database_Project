@@ -3,23 +3,23 @@ const Navbar = () => {
         <nav style={navStyle}>
             <ul style={ulStyle}>
                 <li style={liStyle}>
-                    <a href="#" style={linkStyle}>
-            Home
+                    <a href="/" style={linkStyle}>
+                        Home
                     </a>
                 </li>
                 <li style={liStyle}>
                     <a href="#" style={linkStyle}>
-            About
+                        About
                     </a>
                 </li>
                 <li style={liStyle}>
                     <a href="#" style={linkStyle}>
-            Contact
+                        Contact
                     </a>
                 </li>
                 <li style={liStyle}>
                     <a href="#" style={linkStyle}>
-            Logout
+                        Logout
                     </a>
                 </li>
             </ul>
@@ -29,8 +29,8 @@ const Navbar = () => {
 
 // Styles
 const navStyle = {
-    background: 'blue',
-    padding: '10px',
+    background: '#222222',
+    padding: '20px',
     textAlign: 'center',
 };
 
