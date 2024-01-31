@@ -1,4 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 const Navbar = () => {
+    const navigate = useNavigate();
+    const handleLogOut = () => {
+        localStorage.clear();
+        navigate('/');
+        toast.info('Logged out successfully');
+    };
+
     return (
         <nav style={navStyle}>
             <ul style={ulStyle}>
@@ -18,7 +28,7 @@ const Navbar = () => {
                     </a>
                 </li>
                 <li style={liStyle}>
-                    <a href="#" style={linkStyle}>
+                    <a style={linkStyle} onClick={handleLogOut}>
                         Logout
                     </a>
                 </li>
@@ -29,7 +39,7 @@ const Navbar = () => {
 
 // Styles
 const navStyle = {
-    background: '#222222',
+    background: 'var(--dark)',
     padding: '20px',
     textAlign: 'center',
 };
@@ -50,6 +60,7 @@ const linkStyle = {
     color: 'white',
     textDecoration: 'none',
     padding: '10px',
+    cursor: 'pointer',
 };
 
 export default Navbar;

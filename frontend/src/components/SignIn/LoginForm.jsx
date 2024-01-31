@@ -31,7 +31,7 @@ const LoginForm = () => {
         try {
             const response = await axios.get(url);
 
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.data.access_token);
             toast.success('Signed in successfully');
             setTimeout(() => {
                 navigate('/dashboard');
