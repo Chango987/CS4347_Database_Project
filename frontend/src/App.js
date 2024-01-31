@@ -8,8 +8,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import SignUp from './pages/Signup';
+import { useEffect } from 'react';
+import { backendURL } from './utils';
 
 function App() {
+    useEffect(() => {
+        console.log(backendURL);
+    }, []);
     return (
         <BrowserRouter>
             <Navbar />

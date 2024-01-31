@@ -1,5 +1,5 @@
-export const backendURL = process.env.REACT_APP_BACKEND_ENDPOINT;
-export const frontendURL = process.env.REACT_APP_FRONTEND_ENDPOINT;
+export const backendURL = process.env.REACT_APP_DEVELOPMENT ? 'http://localhost:8000' : 'https://stocks-backend.jeremynguyen.dev';
+export const frontendURL = process.env.REACT_APP_DEVELOPMENT ? 'http://localhost:3000' : 'https://stocks-frontend.jeremynguyen.dev';
 
 export function getAuthHeader() {
     const token = localStorage.getItem('token');
