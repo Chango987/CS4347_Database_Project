@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { backendURL } from '../../utils';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -8,6 +11,7 @@ const Signup = () => {
         email: '',
         password: '',
     });
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -20,27 +24,28 @@ const Signup = () => {
         // form validation
         if (
             !formData.first_name ||
-      !formData.last_name ||
-      !formData.email ||
-      !formData.password
+            !formData.last_name ||
+            !formData.email ||
+            !formData.password
         ) {
             console.error('Please fill in all fields.');
             return;
         }
 
         try {
-            const response = await axios.post('your-api-url-here', {
+            await axios.post(`${backendURL}/user/`, {
                 first_name: formData.first_name,
                 last_name: formData.last_name,
                 email: formData.email,
                 password: formData.password,
             });
 
-            // Assuming the API returns some data upon successful signup
-            console.log('Signup successful!', response.data);
+            toast.success('Signed up successfully');
+            setTimeout(() => {
+                navigate('/');
+            }, 3000);
         } catch (error) {
-            console.error('Signup failed!', error);
-            // Handle signup failure
+            toast.error('Something wrong happened');
         }
     };
 
@@ -84,8 +89,12 @@ const Signup = () => {
             />
 
             <button type="submit">
-                Register
+                Create new account
             </button>
+
+            <div className="register-link">
+                <p>Already have an account? <a href="/">Sign in</a></p>
+            </div>
         </form>
     );
 };

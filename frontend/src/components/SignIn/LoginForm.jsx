@@ -11,7 +11,6 @@ const LoginForm = () => {
         username: '',
         password: '',
     });
-    // eslint-disable-next-line
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
