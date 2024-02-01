@@ -37,37 +37,37 @@ const data = [
 ];
 
 const StockStatsTable = () => {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
-      <div
-        style={{
-          overflowX: 'auto',
-          marginTop: '10px',
-        }}
-      >
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              <th style={{ padding: '8px' }}>Ticker</th>
-              <th style={{ padding: '8px' }}>Stock Name</th>
-              <th style={{ padding: '8px' }}>Stocks Owned</th>
-              <th style={{ padding: '8px' }}>Growth %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => (
-              <tr key={item.key}>
-                <td style={{ padding: '8px' }}>{item.ticker}</td>
-                <td style={{ padding: '8px' }}>{item.stockName}</td>
-                <td style={{ padding: '8px' }}>{item.stocksOwned}</td>
-                <td style={{ padding: '8px' }}>{item.growPercentage}%</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+    return (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
+            <div
+                style={{
+                overflowX: 'auto',
+                marginTop: '10px',
+                }}
+            >
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr>
+                    <th style={{ padding: '8px' }}>Ticker</th>
+                    <th style={{ padding: '8px' }}>Stock Name</th>
+                    <th style={{ padding: '8px' }}>Stocks Owned</th>
+                    <th style={{ padding: '8px' }}>Growth %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((item) => (
+                    <tr key={item.key}>
+                        <td style={{ padding: '8px' }}>{item.ticker}</td>
+                        <td style={{ padding: '8px' }}>{item.stockName}</td>
+                        <td style={{ padding: '8px' }}>{item.stocksOwned}</td>
+                        <td style={{ padding: '8px' }}>{item.growPercentage}%</td>
+                    </tr>
+                    ))}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    );
 };
 
 export default StockStatsTable;

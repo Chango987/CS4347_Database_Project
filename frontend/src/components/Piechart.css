@@ -1,0 +1,25 @@
+.performers, .pie-container {
+    border-radius: 1rem;
+    flex: 1;
+    min-width: none 200px;
+    max-width: 700px;
+    height: 400px;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.pie-container {
+    border-radius: 1rem;
+    max-width: 600px;
+    display: flex;
+
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+
+    & li {
+        white-space: nowrap;
+    }
+}
