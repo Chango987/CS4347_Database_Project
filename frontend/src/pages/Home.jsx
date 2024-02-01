@@ -1,16 +1,11 @@
 // App.js
 import './Home.css';
-
-// import Signup from '../components/Signup';
-// import LoginForm from '../components/LoginForm';
-import Piechart from '../components/Piechart';
+import LoginForm from '../components/SignIn/LoginForm';
 
 function Home() {
   return (
-    <div className="App">
-      <br />
-
-      <Piechart />
+    <div className="home-page">
+      <LoginForm />
     </div>
   );
 }

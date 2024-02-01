@@ -1,17 +1,12 @@
 version: '3.6'
 
 services:
-    # frontend:
-    #     image:
-    #     # The image is built default as port 80
-    #     ports:
-    #       - "3000:80"
-    #     networks:
-    #       - proxy
-    #     env_file:
-    #       - frontend.env
-    #     depends_on:
-    #       - backend
+    frontend:
+        image: jeremu2907/cs4347:frontend
+        ports:
+          - "3000:80"
+        networks:
+          - proxy
 
     backend:
         image: jeremu2907/cs4347:backend
