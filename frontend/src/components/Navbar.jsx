@@ -23,7 +23,7 @@ const Navbar = () => {
                     </a>
                 </li>
                 <li style={liStyle}>
-                    <a href="#" style={linkStyle}>
+                    <a href="/ContactUsPage" style={linkStyle}>
                         Contact
                     </a>
                 </li>
