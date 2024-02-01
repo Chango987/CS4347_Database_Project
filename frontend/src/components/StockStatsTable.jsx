@@ -36,6 +36,8 @@ const data = [
   },
 ];
 
+import './StockStatsTable.css';
+
 const StockStatsTable = () => {
     return (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
@@ -45,25 +47,25 @@ const StockStatsTable = () => {
                 marginTop: '10px',
                 }}
             >
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                    <tr>
-                    <th style={{ padding: '8px' }}>Ticker</th>
-                    <th style={{ padding: '8px' }}>Stock Name</th>
-                    <th style={{ padding: '8px' }}>Stocks Owned</th>
-                    <th style={{ padding: '8px' }}>Growth %</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item) => (
-                    <tr key={item.key}>
-                        <td style={{ padding: '8px' }}>{item.ticker}</td>
-                        <td style={{ padding: '8px' }}>{item.stockName}</td>
-                        <td style={{ padding: '8px' }}>{item.stocksOwned}</td>
-                        <td style={{ padding: '8px' }}>{item.growPercentage}%</td>
-                    </tr>
-                    ))}
-                </tbody>
+                <table className='top-performer-table'>
+                    <thead>
+                        <tr className='title-row'>
+                            <th>Ticker</th>
+                            <th>Stock Name</th>
+                            <th>Stocks Owned</th>
+                            <th>Growth %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((item) => (
+                        <tr key={item.key} className='stock-row'>
+                            <td style={{ padding: '8px' }}>{item.ticker}</td>
+                            <td style={{ padding: '8px' }}>{item.stockName}</td>
+                            <td style={{ padding: '8px' }}>{item.stocksOwned}</td>
+                            <td style={{ padding: '8px' }}>{item.growPercentage}%</td>
+                        </tr>
+                        ))}
+                    </tbody>
                 </table>
             </div>
         </div>
