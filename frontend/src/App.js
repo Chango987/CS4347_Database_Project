@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import SignUp from './pages/Signup';
+import Dashboard from './pages/Dashboard';
 import { useEffect } from 'react';
 import { backendURL } from './utils';
 
@@ -21,6 +22,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
             <ToastContainer
                 autoClose={2000}
