@@ -29,4 +29,3 @@ class UserPortfolio(models.Model):
     small_cap_percentage = models.FloatField()
     medium_cap_percentage = models.FloatField()
     large_cap_percentage = models.FloatField()
-

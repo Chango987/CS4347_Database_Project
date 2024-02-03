@@ -93,9 +93,6 @@ def user_edit_profile(request):
         cursor.execute(sql_statement, [email, first_name, last_name, password, user.id])
 
     return Response(status=status.HTTP_200_OK)
-
-# def delete(self, request, format=None):
-#     data = request.GET
     
 
 class UserPortfolioSerializer(serializers.ModelSerializer):
@@ -163,5 +160,3 @@ class ViewUserPortfolio(APIView):
             cursor.execute(sql_statement, [small_cap_percentage, medium_cap_percentage, large_cap_percentage, user.id])
 
         return Response(status=status.HTTP_200_OK)
-    
-
