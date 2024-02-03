@@ -29,3 +29,12 @@ class UserPortfolio(models.Model):
     small_cap_percentage = models.FloatField()
     medium_cap_percentage = models.FloatField()
     large_cap_percentage = models.FloatField()
+
+
+class UserCashBalance(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    current_cash_balance = models.FloatField()
+    proj_1year_balance = models.FloatField()
+    proj_5year_balance = models.FloatField()
+
+
