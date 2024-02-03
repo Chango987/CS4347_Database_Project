@@ -164,3 +164,6 @@ class ViewUserPortfolio(APIView):
         return Response(status=status.HTTP_200_OK)
     
 
+class ViewUserCashBalance(APIView):
+    def get(self, request, format=None):
+        return Response(status=status.HTTP_200_OK)

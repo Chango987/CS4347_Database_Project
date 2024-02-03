@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from users.views import ViewUsers, ViewUserPortfolio
+from users.views import ViewUsers, ViewUserPortfolio, ViewUserCashBalance
 from stocks.views import ViewStocks, ViewUserStocks
 from suggestions.views import ViewStocksSuggestions
 
@@ -11,5 +11,6 @@ urlpatterns = [
     path('user_stocks/', ViewUserStocks.as_view(), name='user_stocks'),
     path('user_portfolio/', ViewUserPortfolio.as_view(), name='user_portfolio'),
    #path('user_portfolio_actual/', ViewUserPortfolioActual.as_view(), name='user_portfolio_actual'),
-    path('stocks_suggestions/', ViewStocksSuggestions.as_view(), name='stocks_suggestions')
+    path('stocks_suggestions/', ViewStocksSuggestions.as_view(), name='stocks_suggestions'),
+    path('user_cash_balance/', ViewUserCashBalance.as_view(), name='user_cash_balance')
 ]
