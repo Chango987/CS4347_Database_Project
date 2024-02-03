@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import authentication, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.contrib.auth.hashers import make_password, check_password
 from django.db import connection
@@ -65,6 +66,30 @@ class ViewUsers(APIView):
 
         return Response(status=status.HTTP_201_CREATED)
     
+
+    def patch(self, request, format=None):
+        permission_classes = [IsAuthenticated]
+        user = request.user
+        data = request.data
+
+        email = data['email']
+        first_name = data['first_name']
+        last_name = data['last_name']
+        password = make_password(data['password'])
+
+        sql_statement = f"""
+            UPDATE users_user 
+            SET email = %s,
+                first_name = %s,
+                last_name = %s,
+                password = %s
+            WHERE user_id = %s
+        """
+        
+        with connection.cursor() as cursor:
+            cursor.execute(sql_statement, [email, first_name, last_name, password, user.id])
+
+        return Response(status=status.HTTP_200_OK)
 
     # def delete(self, request, format=None):
     #     data = request.GET
