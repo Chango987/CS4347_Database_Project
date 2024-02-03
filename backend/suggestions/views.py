@@ -57,9 +57,6 @@ class ViewStocksSuggestions(APIView):
             for cap_size in cap_size_portfolio.keys()
         }
 
-        print(buying_power + current_holdings)
-        print(cap_size_portfolio)
-
         # Average cost per company (not per single stock of a company)
         avg_large_cap_cost = (power_partition["large_cap"] / len(large_cap_list) if len(large_cap_list) != 0 else 0)
         avg_medium_cap_cost = (power_partition["medium_cap"] / len(medium_cap_list) if len(medium_cap_list) != 0 else 0)
@@ -67,13 +64,22 @@ class ViewStocksSuggestions(APIView):
         
         for stock in large_cap_list:
             if avg_large_cap_cost > (stock["price"] * stock["shares"]):
-                stock["buy"] = (avg_large_cap_cost - (stock["price"] * stock["shares"])) / stock["price"]
+                total_stock_cost = (avg_large_cap_cost - (stock["price"] * stock["shares"]))
+                if total_stock_cost > buying_power * (cap_size_portfolio["large_cap"]/(len(large_cap_list)*100)):
+                    total_stock_cost = buying_power * (cap_size_portfolio["large_cap"]/(len(large_cap_list)*100))
+                stock["buy"] = round(total_stock_cost / stock["price"], 2)
         for stock in medium_cap_list:
             if avg_medium_cap_cost > (stock["price"] * stock["shares"]):
-                stock["buy"] = (avg_medium_cap_cost - (stock["price"] * stock["shares"])) / stock["price"]
+                total_stock_cost = (avg_medium_cap_cost - (stock["price"] * stock["shares"]))
+                if total_stock_cost > buying_power * (cap_size_portfolio["medium_cap"]/(len(medium_cap_list)*100)):
+                    total_stock_cost = buying_power * (cap_size_portfolio["medium_cap"]/(len(medium_cap_list)*100))
+                stock["buy"] = round(total_stock_cost / stock["price"], 2)
         for stock in small_cap_list:
             if avg_small_cap_cost > (stock["price"] * stock["shares"]):
-                stock["buy"] = (avg_small_cap_cost - (stock["price"] * stock["shares"])) / stock["price"]
+                total_stock_cost = (avg_small_cap_cost - (stock["price"] * stock["shares"]))
+                if total_stock_cost > buying_power * (cap_size_portfolio["small_cap"]/(len(small_cap_list)*100)):
+                    total_stock_cost = buying_power * (cap_size_portfolio["small_cap"]/(len(small_cap_list)*100))
+                stock["buy"] = round(total_stock_cost / stock["price"], 2)
 
         final_list = large_cap_list
         final_list.extend(medium_cap_list)
@@ -113,10 +119,7 @@ class ViewStocksSuggestions(APIView):
             cursor.executemany(sql_statement, temp_list)
         connection.commit()
 
-        return Response({
-            "current_holding_val": current_holdings,
-            "recommend": final_list
-        })
+        return Response(final_list)
 
     def get(self, request, format=None):
         user = request.user
