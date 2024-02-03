@@ -9,7 +9,7 @@ from rest_framework import status
 from django.contrib.auth.hashers import make_password, check_password
 from django.db import connection
 
-from .models import User, UserPortfolio, UserPortfolioActual
+from .models import User, UserPortfolio
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -139,12 +139,3 @@ class ViewUserPortfolio(APIView):
         return Response(status=status.HTTP_200_OK)
     
 
-class ViewUserPortfolioActual(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        user = request.user
-        portfolio = UserPortfolioActual.objects.raw("SELECT * FROM users_userportfolioactual WHERE user_id = %s", [user.id])[0]
-        portfolio = UserPortfolioSerializer(portfolio).data
-
-        return Response(portfolio)

@@ -30,10 +30,3 @@ class UserPortfolio(models.Model):
     medium_cap_percentage = models.FloatField()
     large_cap_percentage = models.FloatField()
 
-
-class UserPortfolioActual(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
-    small_cap_percentage = models.FloatField()
-    medium_cap_percentage = models.FloatField()
-    large_cap_percentage = models.FloatField()
-
