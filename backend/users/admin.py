@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import User, UserPortfolio
 
 # Register your models here.
 
@@ -12,4 +12,8 @@ class UsersAdmin(admin.ModelAdmin):
         'is_superuser',
     )
 
+class PortfolioAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in UserPortfolio._meta.get_fields()]
+
+admin.site.register(UserPortfolio, PortfolioAdmin)
 admin.site.register(User, UsersAdmin)

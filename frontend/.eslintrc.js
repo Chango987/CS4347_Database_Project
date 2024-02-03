@@ -1,4 +1,9 @@
 module.exports = {
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
     'ignorePatterns': ['build/*', 'public/*'],
     'env': {
         'es2021': true,
@@ -41,7 +46,6 @@ module.exports = {
             'error',
             'always',
         ],
-        'comma-dangle': ['error', 'always-multiline'],
         'comma-spacing': 'error',
         'comma-style': 'error',
         'dot-location': ['error', 'property'],
