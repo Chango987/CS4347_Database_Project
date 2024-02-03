@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+import Home from './pages/Home';
+import Navbar from './components/Navbar';
+import SignUp from './pages/Signup';
+import { useEffect } from 'react';
+import { backendURL } from './utils';
 
 function App() {
+    useEffect(() => {
+        console.log(backendURL);
+    }, []);
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                Learn React
-                </a>
-            </header>
-        </div>
+        <BrowserRouter>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<SignUp />} />
+            </Routes>
+            <ToastContainer
+                autoClose={2000}
+                position="bottom-right"
+            />
+        </BrowserRouter>
     );
 }
 

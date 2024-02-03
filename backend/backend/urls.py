@@ -1,23 +1,16 @@
-"""backend URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from users.views import ViewUsers
+from users.views import ViewUsers, ViewUserPortfolio, user_edit_profile
+from stocks.views import ViewStocks, ViewUserStocks
+from suggestions.views import ViewStocksSuggestions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', ViewUsers.as_view(), name='user')
+    path('user/', ViewUsers.as_view(), name='user'),
+    path('user_edit_profile/', user_edit_profile, name='user_edit_profile'),
+    path('stocks/', ViewStocks.as_view(), name='stocks'),
+    path('user_stocks/', ViewUserStocks.as_view(), name='user_stocks'),
+    path('user_portfolio/', ViewUserPortfolio.as_view(), name='user_portfolio'),
+   #path('user_portfolio_actual/', ViewUserPortfolioActual.as_view(), name='user_portfolio_actual'),
+    path('stocks_suggestions/', ViewStocksSuggestions.as_view(), name='stocks_suggestions')
 ]

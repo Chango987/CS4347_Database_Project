@@ -1,5 +1,9 @@
 # User Manual
+___
 
+## API Docs
+[API docs here](https://github.com/Chango987/CS4347_Database_Project/blob/main/backend-api.md)
+___
 ## BACKEND
 ### Setting up backend
 On first time running the backend, you need to set up your python virtual environment
@@ -30,7 +34,7 @@ password: `admin`
 Create new app (module)
 ```bash
 cd backend
-python3 startapp [APP_NAME]
+python3 manage.py startapp [APP_NAME]
 ```
 
 then in backend/settings.py, register our new module
@@ -56,6 +60,13 @@ python3 manage.py makemigrations
 `migrateToDB.bash` saves all changes to the DB tables/schemas to DB_SCHEMA_MODIFY.log
 
 ## FRONTEND
+### Setting up
+```bash
+cd frontend
+npm install
+```
+
+### Running
 ```bash
 cd frontend
 npm start
