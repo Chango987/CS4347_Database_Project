@@ -5,11 +5,13 @@ from rest_framework import serializers
 from rest_framework import authentication, permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.contrib.auth.hashers import make_password, check_password
 from django.db import connection
+from rest_framework.decorators import api_view, permission_classes
 
-from .models import User, UserPortfolio, UserPortfolioActual
+from .models import User, UserPortfolio
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,9 +69,30 @@ class ViewUsers(APIView):
 
         return Response(status=status.HTTP_201_CREATED)
     
+@permission_classes([IsAuthenticated])
+@api_view(['PATCH'])
+def user_edit_profile(request):
+    user = request.user
+    data = request.data
 
-    # def delete(self, request, format=None):
-    #     data = request.GET
+    email = data['email']
+    first_name = data['first_name']
+    last_name = data['last_name']
+    password = make_password(data['password'])
+
+    sql_statement = f"""
+        UPDATE users_user 
+        SET email = %s,
+            first_name = %s,
+            last_name = %s,
+            password = %s
+        WHERE id = %s
+    """
+    
+    with connection.cursor() as cursor:
+        cursor.execute(sql_statement, [email, first_name, last_name, password, user.id])
+
+    return Response(status=status.HTTP_200_OK)
     
 
 class UserPortfolioSerializer(serializers.ModelSerializer):
@@ -137,14 +160,3 @@ class ViewUserPortfolio(APIView):
             cursor.execute(sql_statement, [small_cap_percentage, medium_cap_percentage, large_cap_percentage, user.id])
 
         return Response(status=status.HTTP_200_OK)
-    
-
-class ViewUserPortfolioActual(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, format=None):
-        user = request.user
-        portfolio = UserPortfolioActual.objects.raw("SELECT * FROM users_userportfolioactual WHERE user_id = %s", [user.id])[0]
-        portfolio = UserPortfolioSerializer(portfolio).data
-
-        return Response(portfolio)

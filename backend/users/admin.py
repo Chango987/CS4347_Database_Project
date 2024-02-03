@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import User, UserPortfolio, UserPortfolioActual
-
-# Register your models here.
+from .models import User, UserPortfolio
 
 class UsersAdmin(admin.ModelAdmin):
     list_display = (
@@ -17,4 +15,3 @@ class PortfolioAdmin(admin.ModelAdmin):
 
 admin.site.register(UserPortfolio, PortfolioAdmin)
 admin.site.register(User, UsersAdmin)
-admin.site.register(UserPortfolioActual, PortfolioAdmin)
