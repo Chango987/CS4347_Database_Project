@@ -1,7 +1,9 @@
 import { PieChart, Pie, Cell } from 'recharts';
 import StockStatsTable from './StockStatsTable';
-
+import { backendURL, getAuthHeader } from '../utils';
+import axios from 'axios';
 import './Piechart.css';
+import { useEffect, useState } from 'react';
 
 const data = [
     { name: 'Group A', value: 400 },
@@ -49,6 +51,21 @@ const renderCustomizedLabel = ({
     };
 
 const Piechart = () => {
+    // eslint-disable-next-line
+    const [apiData, setApiData] = useState([]);
+    const fetchData = async () => {
+            try {
+                const response = await axios.get(`${backendURL}/user_stocks/`, getAuthHeader());
+                setApiData(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <>
         <div
