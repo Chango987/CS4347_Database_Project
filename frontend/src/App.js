@@ -11,6 +11,7 @@ import SignUp from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import { useEffect } from 'react';
 import { backendURL } from './utils';
+import Footer from './components/Footer';
 
 function App() {
     useEffect(() => {
@@ -28,6 +29,7 @@ function App() {
                 autoClose={2000}
                 position="bottom-right"
             />
+            <Footer />
         </BrowserRouter>
     );
 }

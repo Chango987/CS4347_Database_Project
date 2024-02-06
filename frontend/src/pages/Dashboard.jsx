@@ -1,12 +1,20 @@
 import './Home.css';
 import Piechart from '../components/Piechart';
+import Dropdown from '../components/Dropdown';
 
 function Dashboard() {
-  return (
-    <div className="home-page">
-        <Piechart />
-    </div>
-  );
+    return (
+        <div className="dashboard-page">
+            <Piechart />
+        <br />
+
+            <Dropdown/>
+
+            <Dropdown/>
+
+            <Dropdown/>
+        </div>
+    );
 }
 
 export default Dashboard;
