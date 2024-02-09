@@ -4,10 +4,11 @@ import dotenv
 import sched, time
 import logging
 import yfinance as yf
+from datetime import datetime, timedelta
 
 dotenv.load_dotenv()
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 try:
     conn = psycopg2.connect(
         host=os.getenv("DATABASE_HOST"),
@@ -37,7 +38,6 @@ except (Exception, psycopg2.DatabaseError) as error:
     exit()
 
 def bot(scheduler):
-    scheduler.enter(60, 1, bot, (scheduler,))
     try:
         logging.info("NEXT UPDATE ITERATION")
         # Open connection
@@ -45,28 +45,45 @@ def bot(scheduler):
         
         # Main api fetching and update logic here
         cur.execute("SELECT ticker FROM stocks_stock")
-        tickerList = cur.fetchall()
-        tickerList = [ticker[0]for ticker in tickerList]
-        
-        update_query = """
-        UPDATE stocks_stock
-        SET price = %s, week_growth = %s, five_year_growth = %s
-        WHERE ticker = %s
-        """
-        
+        ticker_list = cur.fetchall()
+        ticker_list = [ticker[0] for ticker in ticker_list]
+        ticker_list_str = " ".join(ticker_list)
+
+        yf_stock = yf.Tickers(ticker_list_str)
+        yf_stock = yf_stock.tickers
+        current_year = datetime.now().year
+
+        current_date = datetime.now()
+        last_week_date = current_date - timedelta(days=current_date.weekday() + 7)
+        last_week_formatted = last_week_date.strftime("%Y-%m-%d")
+
         data = []
-        
-        print(yf.Ticker('AAPL').basic_info["yearChange"])
-        
-        #for ticker in tickerList:
-            #yfStock = yf.Ticker(ticker)
-            #fiveYearPercent = ("{:.2f}".format(yfStock.info['fiveYearAverageReturn']) * 100)
-            #yearDatePercent = ("{:.2f}".format(yfStock.info['ytdReturn']))
-            #currentStockPrice = ("{:.2f}".format(yfStock.basic_info['lastPrice']))
-            #data.append((currentStockPrice, 1, 2, ticker))
-            
+        for stock in yf_stock:
+            ticker = stock
+            current_price = yf_stock[stock].info["currentPrice"]
+            try:
+                five_year_open = (
+                    yf_stock[stock].history(start=f"{current_year - 5}-01-02", end=f"{current_year - 5}-01-03", interval="1d")
+                )
+                five_year_open = five_year_open["Open"].iloc[0]
+                five_year_percent = round(((current_price - five_year_open) / five_year_open) * 100, 2)
+
+                last_week_open = (
+                    yf_stock[stock].history(start=last_week_formatted, interval="5d")
+                )
+                last_week_open = last_week_open["Open"].iloc[0]
+                one_week_percent = round(((current_price - last_week_open) / last_week_open) * 100, 2) 
+
+                data.append((current_price, one_week_percent, five_year_percent, ticker))
+            except Exception:
+                pass
 
         # Execute the batch update
+        update_query = """
+            UPDATE stocks_stock
+            SET price = %s, week_growth = %s, five_year_growth = %s
+            WHERE ticker = %s
+        """
         cur.executemany(update_query, data)
         
         conn.commit()
@@ -75,6 +92,7 @@ def bot(scheduler):
         
         # Close connection
         cur.close()
+        scheduler.enter(1, 1, bot, (scheduler,))
     except(Exception, psycopg2.DatabaseError) as error:
         logging.error("STOCK PRICE UPDATE FAILURE")
         logging.error(error)
