@@ -7,8 +7,11 @@ import yfinance as yf
 from datetime import datetime, timedelta
 
 dotenv.load_dotenv()
+import warnings
 
-logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+# Suppress all future warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 try:
     conn = psycopg2.connect(
         host=os.getenv("DATABASE_HOST"),
@@ -60,7 +63,7 @@ def bot(scheduler):
         data = []
         for stock in yf_stock:
             ticker = stock
-            current_price = yf_stock[stock].info["currentPrice"]
+            current_price = round(yf_stock[stock].fast_info["lastPrice"], 2)
             try:
                 five_year_open = (
                     yf_stock[stock].history(start=f"{current_year - 5}-01-02", end=f"{current_year - 5}-01-03", interval="1d")
@@ -75,6 +78,7 @@ def bot(scheduler):
                 one_week_percent = round(((current_price - last_week_open) / last_week_open) * 100, 2) 
 
                 data.append((current_price, one_week_percent, five_year_percent, ticker))
+                # data.append((current_price, ticker))
             except Exception:
                 pass
 
@@ -88,7 +92,7 @@ def bot(scheduler):
         
         conn.commit()
 
-        print("Done updating stocks")
+        logging.info("Done updating stocks")
         
         # Close connection
         cur.close()
