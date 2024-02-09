@@ -42,6 +42,7 @@ except (Exception, psycopg2.DatabaseError) as error:
     exit()
 
 def bot(scheduler):
+    scheduler.enter(60, 1, bot, (scheduler,))
     try:
         logging.info("NEXT UPDATE ITERATION")
         # Open connection
@@ -97,7 +98,6 @@ def bot(scheduler):
         
         # Close connection
         cur.close()
-        scheduler.enter(1, 1, bot, (scheduler,))
     except(Exception, psycopg2.DatabaseError) as error:
         logging.error("STOCK PRICE UPDATE FAILURE")
         logging.error(error)
