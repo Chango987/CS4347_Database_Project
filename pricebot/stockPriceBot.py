@@ -3,6 +3,7 @@ import os
 import dotenv
 import sched, time
 import logging
+import yfinance as yf
 
 dotenv.load_dotenv()
 
@@ -43,7 +44,35 @@ def bot(scheduler):
         cur = conn.cursor()
         
         # Main api fetching and update logic here
+        cur.execute("SELECT ticker FROM stocks_stock")
+        tickerList = cur.fetchall()
+        tickerList = [ticker[0]for ticker in tickerList]
+        
+        update_query = """
+        UPDATE stocks_stock
+        SET price = %s, week_growth = %s, five_year_growth = %s
+        WHERE ticker = %s
+        """
+        
+        data = []
+        
+        print(yf.Ticker('AAPL').basic_info["yearChange"])
+        
+        #for ticker in tickerList:
+            #yfStock = yf.Ticker(ticker)
+            #fiveYearPercent = ("{:.2f}".format(yfStock.info['fiveYearAverageReturn']) * 100)
+            #yearDatePercent = ("{:.2f}".format(yfStock.info['ytdReturn']))
+            #currentStockPrice = ("{:.2f}".format(yfStock.basic_info['lastPrice']))
+            #data.append((currentStockPrice, 1, 2, ticker))
+            
 
+        # Execute the batch update
+        cur.executemany(update_query, data)
+        
+        conn.commit()
+
+        print("Done updating stocks")
+        
         # Close connection
         cur.close()
     except(Exception, psycopg2.DatabaseError) as error:
@@ -56,5 +85,5 @@ def bot(scheduler):
         exit()
 
 my_scheduler = sched.scheduler(time.time, time.sleep)
-my_scheduler.enter(60, 1, bot, (my_scheduler,))
+my_scheduler.enter(1, 1, bot, (my_scheduler,))
 my_scheduler.run()
