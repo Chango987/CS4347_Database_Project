@@ -4,3 +4,4 @@ venv
 sql.log
 .DS_Store
 .vscode
+*cache

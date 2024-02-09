@@ -1,13 +1,15 @@
 import psycopg2
 import os
 import dotenv
-import sched, time
+import sched
+import time
 import logging
 import yfinance as yf
 from datetime import datetime, timedelta
+import warnings
+from requestCache import session
 
 dotenv.load_dotenv()
-import warnings
 
 # Suppress all future warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -31,7 +33,6 @@ try:
     logging.info(db_version)
     logging.info("CONNECTION TO DB ESTABLISHED")
     cur.close()
-
 except (Exception, psycopg2.DatabaseError) as error:
     logging.error(error)
     if conn is not None:
@@ -52,7 +53,7 @@ def bot(scheduler):
         ticker_list = [ticker[0] for ticker in ticker_list]
         ticker_list_str = " ".join(ticker_list)
 
-        yf_stock = yf.Tickers(ticker_list_str)
+        yf_stock = yf.Tickers(ticker_list_str, session=session)
         yf_stock = yf_stock.tickers
         current_year = datetime.now().year
 
