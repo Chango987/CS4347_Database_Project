@@ -54,7 +54,8 @@ def bot(scheduler):
         ticker_list = [ticker[0] for ticker in ticker_list]
         ticker_list_str = " ".join(ticker_list)
 
-        yf_stock = yf.Tickers(ticker_list_str, session=session)
+        # yf_stock = yf.Tickers(ticker_list_str, session=session)
+        yf_stock = yf.Tickers(ticker_list_str)
         yf_stock = yf_stock.tickers
         current_year = datetime.now().year
 
