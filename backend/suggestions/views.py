@@ -32,18 +32,18 @@ class ViewStocksSuggestions(APIView):
         cap_size_portfolio = json.loads(data['cap_size_portfolio'])
         buying_power = int(data['buying_power'])
 
-        power_partition = {
-            cap_size: buying_power * (cap_size_portfolio[cap_size]/100)
-            for cap_size in cap_size_portfolio.keys()
-        }
-
+        # Get user's stocks
         stock_list = UserStocks.objects.raw("SELECT * FROM stocks_userstocks WHERE user_id = %s", [user.id])
         stock_list = UserStockSerializer(stock_list, many=True).data
 
+        current_holdings = 0
         large_cap_list = []
         medium_cap_list = []
         small_cap_list = []
+        # Classify and calculate current holdings
         for stock in stock_list:
+            current_holdings += stock["stocks"]["price"] * stock["shares"]
+            stock["stocks"]["shares"] = stock["shares"]
             if stock["stocks"]["cap_size"] == "l":
                 large_cap_list.append(stock["stocks"])
             elif stock["stocks"]["cap_size"] == "m":
@@ -51,20 +51,41 @@ class ViewStocksSuggestions(APIView):
             else:
                 small_cap_list.append(stock["stocks"])
 
+        # Get net holdings for each cap size with new cash amount
+        power_partition = {
+            cap_size: (buying_power + current_holdings) * (cap_size_portfolio[cap_size]/100)
+            for cap_size in cap_size_portfolio.keys()
+        }
+
+        # Average cost per company (not per single stock of a company)
         avg_large_cap_cost = (power_partition["large_cap"] / len(large_cap_list) if len(large_cap_list) != 0 else 0)
         avg_medium_cap_cost = (power_partition["medium_cap"] / len(medium_cap_list) if len(medium_cap_list) != 0 else 0)
         avg_small_cap_cost = (power_partition["small_cap"] / len(small_cap_list) if len(small_cap_list) != 0 else 0)
         
         for stock in large_cap_list:
-            stock["shares"] = avg_large_cap_cost / stock["price"]
+            if avg_large_cap_cost > (stock["price"] * stock["shares"]):
+                total_stock_cost = (avg_large_cap_cost - (stock["price"] * stock["shares"]))
+                if total_stock_cost > buying_power * (cap_size_portfolio["large_cap"]/(len(large_cap_list)*100)):
+                    total_stock_cost = buying_power * (cap_size_portfolio["large_cap"]/(len(large_cap_list)*100))
+                stock["buy"] = round(total_stock_cost / stock["price"], 2)
         for stock in medium_cap_list:
-            stock["shares"] = avg_medium_cap_cost / stock["price"]
+            if avg_medium_cap_cost > (stock["price"] * stock["shares"]):
+                total_stock_cost = (avg_medium_cap_cost - (stock["price"] * stock["shares"]))
+                if total_stock_cost > buying_power * (cap_size_portfolio["medium_cap"]/(len(medium_cap_list)*100)):
+                    total_stock_cost = buying_power * (cap_size_portfolio["medium_cap"]/(len(medium_cap_list)*100))
+                stock["buy"] = round(total_stock_cost / stock["price"], 2)
         for stock in small_cap_list:
-            stock["shares"] = avg_small_cap_cost / stock["price"]
+            if avg_small_cap_cost > (stock["price"] * stock["shares"]):
+                total_stock_cost = (avg_small_cap_cost - (stock["price"] * stock["shares"]))
+                if total_stock_cost > buying_power * (cap_size_portfolio["small_cap"]/(len(small_cap_list)*100)):
+                    total_stock_cost = buying_power * (cap_size_portfolio["small_cap"]/(len(small_cap_list)*100))
+                stock["buy"] = round(total_stock_cost / stock["price"], 2)
 
         final_list = large_cap_list
         final_list.extend(medium_cap_list)
         final_list.extend(small_cap_list)
+
+        final_list = [item for item in final_list if "buy" in item]
 
         if len(final_list) == 0:
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -92,7 +113,7 @@ class ViewStocksSuggestions(APIView):
                 VALUES (%s, %s, %s, %s, %s, %s)
             """
             temp_list = [
-                (user.id, stock['id'], 0, stock['shares'], stock['price'], 'now()')
+                (user.id, stock['id'], 0, stock['buy'], stock['price'], 'now()')
                 for stock in final_list
             ]
             cursor.executemany(sql_statement, temp_list)

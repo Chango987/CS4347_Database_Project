@@ -28,11 +28,11 @@ class UserStockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserStocks
-        fields = ['stocks']
+        fields = ['stocks', 'shares']
 
 
 class ViewUserStocks(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         user = request.user
@@ -49,10 +49,15 @@ class ViewUserStocks(APIView):
         user = request.user
 
         sql_statement = f"""
-            INSERT INTO stocks_userstocks (user_id, stocks_id) VALUES (%s, %s)
+            INSERT INTO stocks_userstocks (user_id, stocks_id, shares)
+            VALUES (%s, %s, %s)
         """
         with connection.cursor() as cursor:
-            cursor.execute(sql_statement, [user.id, data['stocks_id']])
+            cursor.execute(sql_statement, [
+                user.id,
+                data['stocks_id'],
+                data.get('shares', 0)
+            ])
         connection.commit()
         
         return Response(status=status.HTTP_201_CREATED)

@@ -35,7 +35,8 @@ GET: auth
 POST: auth
 ```
 data: {
-    stocks_id
+    stocks_id,
+    shares (optional)
 }
 ```
 
