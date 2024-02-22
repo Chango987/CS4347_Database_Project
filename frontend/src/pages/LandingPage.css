@@ -1,11 +1,10 @@
-:root {
+.landing-page {
+    /* Define your custom properties here so they only affect landing-page and its children */
     --primary-color: #7074d8; /* Or any other color code you want to use */
     --text-light: #FFFFFF;
     --background-gradient: linear-gradient(150deg, rgb(90, 222, 255), rgb(32, 91, 168), rgb(30, 0, 57));
     --text-gradient: linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,1));
-}
 
-.landing-page {
     font-family: 'Arial', sans-serif;
     background-image: var(--background-gradient);
     min-height: 100vh; 
