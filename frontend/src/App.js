@@ -5,7 +5,7 @@ import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-import Home from './pages/Home';
+import SignIn from './pages/SignIn';
 import Navbar from './components/Navbar';
 import SignUp from './pages/Signup';
 import LandingPage from './pages/LandingPage';
@@ -22,7 +22,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="/signin" element={<SignIn />} />
             </Routes>
             <ToastContainer
                 autoClose={2000}
