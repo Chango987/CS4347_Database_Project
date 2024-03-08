@@ -69,8 +69,41 @@ const StockGen = () => {
                 buying_power: parseFloat(buyPower),
             }, auth);
 
-            setSuggestion(resp.data);
-            setShowSug(true);
+            if (resp.status === 200) {
+                setSuggestion(resp.data);
+                setShowSug(true);
+            }
+            else if (resp.status === 204) {
+                toast.info('No suggestion for your portfolio right now');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const deleteStock = async (id, idx) => {
+        try {
+            await axios.delete(`${backendURL}/user_stocks/?stocks_id=${id}`, auth);
+            const temp = userStocks;
+            temp.splice(idx, 1);
+            setUserStocks([...temp]);
+            toast.success(`Removed ${otherStocks[idx].ticker} from your list`);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const addStock = async (id, idx) => {
+        try {
+            await axios.post(`${backendURL}/user_stocks/`, {
+                stocks_id: id,
+            }, auth);
+            const newItem = {
+                stocks: otherStocks[idx],
+                shares: 0,
+            };
+            setUserStocks(prev => [newItem, ...prev]);
+            toast.success(`Added ${otherStocks[idx].ticker} to your list`);
         } catch (err) {
             console.error(err);
         }
@@ -91,6 +124,7 @@ const StockGen = () => {
                     onClick={() => setShowSug(false)}
                 >
                     <div onClick={(e) => {e.stopPropagation();}}>
+                        <h3>Your stock purchase suggestion</h3>
                         <div className='sug-side-container'>
                             <div className='sug-item sug-item-header'>
                                 <h4>Stock</h4>
@@ -121,14 +155,14 @@ const StockGen = () => {
                 <div>
                     {otherStocks.map((item, idx) => {
                         return (
-                            <OtherStockItem item={item} key={idx} />
+                            <OtherStockItem item={item} key={idx} addStock={() => addStock(item.id, idx)}/>
                         );
                     })}
                 </div>
                 <div>
                     {userStocks.map((item, idx) => {
                         return (
-                            <YourStockItem item={item} key={idx} />
+                            <YourStockItem item={item} key={idx} deleteStock={() => deleteStock(item.stocks.id, idx)}/>
                         );
                     })}
                 </div>

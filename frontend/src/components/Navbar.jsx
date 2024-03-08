@@ -5,7 +5,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const handleLogOut = () => {
         localStorage.clear();
-        navigate('/');
+        navigate('/signin');
         toast.info('Logged out successfully');
     };
 
