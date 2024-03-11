@@ -97,7 +97,7 @@ class ViewStocksSuggestions(APIView):
         final_list.extend(medium_cap_list)
         final_list.extend(small_cap_list)
 
-        final_list = [item for item in final_list if "buy" in item]
+        final_list = [item for item in final_list if "buy" in item and item["buy"] > 0]
 
         if len(final_list) == 0:
             return Response(status=status.HTTP_204_NO_CONTENT)
