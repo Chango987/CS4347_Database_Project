@@ -115,6 +115,26 @@
     }
 }
 
+.sug-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & button {
+        border: none;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: rgb(179, 179, 179);
+        box-shadow: none;
+        color: white;
+        transition: background-color 0.2s
+    }
+    
+    & button:hover {
+        background-color: var(--blue-theme);
+    }
+}
+
 .sug-side-container {
     box-sizing: border-box;
     position: relative;

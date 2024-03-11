@@ -77,6 +77,7 @@ const StockGen = () => {
                 toast.info('No suggestion for your portfolio right now');
             }
         } catch (err) {
+            toast.error('Check if you exceeded your available balance');
             console.error(err);
         }
     };
@@ -109,6 +110,17 @@ const StockGen = () => {
         }
     };
 
+    const addSugToPort = async () => {
+        await axios.put(`${backendURL}/user_select_suggestion/`,
+            { stocks_list: suggestion },
+            auth
+        );
+
+        setShowSug(false);
+        getUserStocks();
+        getCash();
+    };
+
     useState(() => {
         getOtherStocks();
         getUserStocks();
@@ -124,7 +136,10 @@ const StockGen = () => {
                     onClick={() => setShowSug(false)}
                 >
                     <div onClick={(e) => {e.stopPropagation();}}>
-                        <h3>Your stock purchase suggestion</h3>
+                        <div className='sug-header'>
+                            <h3>Your stock purchase suggestion</h3>
+                            <button onClick={addSugToPort}>Add to your portfolio</button>
+                        </div>
                         <div className='sug-side-container'>
                             <div className='sug-item sug-item-header'>
                                 <h4>Stock</h4>
