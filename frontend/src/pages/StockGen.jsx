@@ -124,6 +124,12 @@ const StockGen = () => {
     useState(() => {
         getOtherStocks();
         getUserStocks();
+        setInterval(
+            function() {
+                getOtherStocks();
+                getUserStocks();
+            }, 30 * 1000
+        );
         getUserPort();
         getCash();
     }, []);
