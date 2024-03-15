@@ -1,4 +1,4 @@
-.sign-in-up-form {
+.sign-in-up-form, .common-input {
     display: flex;
     flex-direction: column;
     gap: 20px;

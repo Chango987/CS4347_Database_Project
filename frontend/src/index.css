@@ -19,6 +19,7 @@ code {
     --gray: #afafaf;
     --transparent: #00000000;
     --dark: rgb(38, 38, 38);
+    --blue-theme: rgb(21, 137, 205);
 }
 
 * {

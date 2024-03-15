@@ -5,12 +5,13 @@ import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-import Home from './pages/Home';
+import SignIn from './pages/SignIn';
 import Navbar from './components/Navbar';
 import SignUp from './pages/Signup';
 import LandingPage from './pages/LandingPage';
 import { useEffect } from 'react';
 import { backendURL } from './utils';
+import StockGen from './pages/StockGen';
 
 function App() {
     useEffect(() => {
@@ -22,7 +23,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/stockgen" element={<StockGen />} />
             </Routes>
             <ToastContainer
                 autoClose={2000}

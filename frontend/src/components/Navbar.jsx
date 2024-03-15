@@ -2,10 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const Navbar = () => {
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
     const handleLogOut = () => {
         localStorage.clear();
-        navigate('/');
+        navigate('/signin');
         toast.info('Logged out successfully');
     };
 
@@ -18,6 +19,11 @@ const Navbar = () => {
                     </a>
                 </li>
                 <li style={liStyle}>
+                    <a href="/stockgen" style={linkStyle}>
+                        Suggestion engine
+                    </a>
+                </li>
+                <li style={liStyle}>
                     <a href="#" style={linkStyle}>
                         About
                     </a>
@@ -27,11 +33,19 @@ const Navbar = () => {
                         Contact
                     </a>
                 </li>
-                <li style={liStyle}>
-                    <a style={linkStyle} onClick={handleLogOut}>
-                        Logout
-                    </a>
-                </li>
+                {token ?
+                    <li style={liStyle}>
+                        <a style={linkStyle} onClick={handleLogOut}>
+                            Sign out
+                        </a>
+                    </li>
+                    :
+                    <li style={liStyle}>
+                        <a style={linkStyle} onClick={() => navigate('/signin')}>
+                            Sign in
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
     );

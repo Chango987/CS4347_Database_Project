@@ -4,7 +4,7 @@ export const frontendURL = process.env.REACT_APP_DEVELOPMENT ? 'http://localhost
 export function getAuthHeader() {
     const token = localStorage.getItem('token');
     if (!token) {
-        return null;
+        window.location.href = '/signin';
     }
 
     const config = {

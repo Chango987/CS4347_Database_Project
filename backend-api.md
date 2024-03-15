@@ -89,3 +89,6 @@ data: {
     buying_power,
 }
 ```
+
+### /user_cash_balance/
+GET: auth
