@@ -18,6 +18,11 @@ const Navbar = () => {
                     </a>
                 </li>
                 <li style={liStyle}>
+                    <a href="/signin" style={linkStyle}>
+                        Sign in
+                    </a>
+                </li>
+                <li style={liStyle}>
                     <a href="#" style={linkStyle}>
                         About
                     </a>

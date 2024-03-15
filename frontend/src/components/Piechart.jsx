@@ -1,5 +1,3 @@
-
-
 import { PieChart, Pie, Cell } from 'recharts';
 import StockStatsTable from './StockStatsTable';
 import { backendURL, getAuthHeader } from '../utils';
@@ -88,7 +86,17 @@ const Piechart = () => {
         try {
             const response = await axios.get(`${backendURL}/user_stocks/`, getAuthHeader());
             setApiData(response.data);
-            calcSpread(response.data);
+
+            if (response.data.length > 0) {
+                calcSpread(response.data);
+            }
+            else {
+                setSpread([
+                    { name: 'small', value: 33.33 },
+                    { name: 'medium', value: 33.33 },
+                    { name: 'large', value: 33.33 },
+                ]);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
