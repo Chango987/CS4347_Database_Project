@@ -34,7 +34,7 @@ const LoginForm = () => {
             localStorage.setItem('token', response.data.access_token);
             toast.success('Signed in successfully');
             setTimeout(() => {
-                navigate('/dashboard');
+                navigate('/stockgen');
             }, 3000);
         } catch (error) {
             toast.error('Oops! Wrong sign in info');

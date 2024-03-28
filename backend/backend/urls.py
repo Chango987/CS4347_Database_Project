@@ -7,7 +7,7 @@ from users.views import (
     ViewUserCashBalance
 )
 from stocks.views import ViewStocks, ViewUserStocks
-from suggestions.views import ViewStocksSuggestions
+from suggestions.views import ViewStocksSuggestions, user_select_suggestion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,5 +18,6 @@ urlpatterns = [
     path('user_portfolio/', ViewUserPortfolio.as_view(), name='user_portfolio'),
    #path('user_portfolio_actual/', ViewUserPortfolioActual.as_view(), name='user_portfolio_actual'),
     path('stocks_suggestions/', ViewStocksSuggestions.as_view(), name='stocks_suggestions'),
+    path('user_select_suggestion/', user_select_suggestion, name='user_select_suggestion'),
     path('user_cash_balance/', ViewUserCashBalance.as_view(), name='user_cash_balance')
 ]

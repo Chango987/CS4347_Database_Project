@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './StockStatsTable.css';
 
 const StockStatsTable = () => {
@@ -8,7 +7,7 @@ const StockStatsTable = () => {
     useEffect(() => {
         fetch('/user_portfolio_actual/')
             .then(response => response.json())
-            .then(data => setData(data))
+            .then(newData => setData(newData))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 

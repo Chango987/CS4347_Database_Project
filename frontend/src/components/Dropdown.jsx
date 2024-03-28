@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Dropdown = () => {
     const [stockHistory, setStockHistory] = useState([]);
@@ -10,7 +10,7 @@ const Dropdown = () => {
                     large_cap: true,
                     mid_cap: true,
                     small_cap: true,
-                    buying_power: 10000 
+                    buying_power: 10000
                 });
 
                 const response = await fetch(`/stocks_suggestions/?${params.toString()}`, {
@@ -55,14 +55,6 @@ const Dropdown = () => {
 };
 
 export default Dropdown;
-
-
-
-
-
-
-
-
 
 // const Dropdown = () => {
 //     return (

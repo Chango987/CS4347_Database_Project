@@ -1,9 +1,13 @@
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from rest_framework.permissions import IsAuthenticated
 from django.db import connection
 import json
+
+from sympy import round_two
+from users.models import UserCashBalance
 
 from stocks.models import Stock, UserStocks
 from stocks.views import UserStockSerializer, StocksSerializer
@@ -30,7 +34,15 @@ class ViewStocksSuggestions(APIView):
         data = request.data
         user = request.user
         cap_size_portfolio = json.loads(data['cap_size_portfolio'])
-        buying_power = int(data['buying_power'])
+        buying_power = float(data['buying_power'])
+
+        current_cash = UserCashBalance.objects.raw(f"""
+            SELECT * FROM users_usercashbalance
+            WHERE user_id = %s
+        """, [user.id])[0]
+
+        if buying_power > current_cash.current_cash_balance or buying_power < 0:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
         # Get user's stocks
         stock_list = UserStocks.objects.raw("SELECT * FROM stocks_userstocks WHERE user_id = %s", [user.id])
@@ -85,7 +97,7 @@ class ViewStocksSuggestions(APIView):
         final_list.extend(medium_cap_list)
         final_list.extend(small_cap_list)
 
-        final_list = [item for item in final_list if "buy" in item]
+        final_list = [item for item in final_list if "buy" in item and item["buy"] > 0]
 
         if len(final_list) == 0:
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -135,3 +147,44 @@ class ViewStocksSuggestions(APIView):
         suggested_info = StockSuggestionSerializer(suggested_info, many=True).data
 
         return Response(suggested_info)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def user_select_suggestion(request):
+    user = request.user
+    data = request.data['stocks_list']
+
+    total_purchase = [
+        {
+            'shares': item['buy'],
+            'stock_id': item['id'],
+            'total_value': item['price'] * item['buy']
+        }
+        for item in data
+        if item['buy'] > 0
+    ]
+
+    with connection.cursor() as cursor:
+        sql_query = f"""
+            UPDATE stocks_userstocks
+            SET shares = shares + %s
+            WHERE user_id = %s AND stocks_id = %s
+        """
+        params = [(item['shares'], user.id, item['stock_id']) for item in total_purchase]
+        cursor.executemany(sql_query, params)
+
+        total_value = sum([item['total_value'] for item in total_purchase])
+        current_cash = UserCashBalance.objects.raw(f"""
+            SELECT * FROM users_usercashbalance
+            WHERE user_id = %s
+        """, [user.id])[0]
+        current_cash = current_cash.current_cash_balance
+        sql_query = f"""
+            UPDATE users_usercashbalance
+            SET current_cash_balance = %s
+            WHERE user_id = %s
+        """
+        cursor.execute(sql_query, [round(current_cash - total_value, 2), user.id])
+    connection.commit()
+
+    return Response(total_purchase)

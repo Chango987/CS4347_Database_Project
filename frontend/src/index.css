@@ -1,9 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Work+Sans:wght@200;300;400;500&display=swap');
 
 body {
@@ -22,9 +16,10 @@ code {
 }
 
 :root {
-  --gray: #afafaf;
-  --transparent: #00000000;
-  --dark: rgb(38, 38, 38);
+    --gray: #afafaf;
+    --transparent: #00000000;
+    --dark: rgb(38, 38, 38);
+    --blue-theme: rgb(21, 137, 205);
 }
 
 * {

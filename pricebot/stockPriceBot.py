@@ -59,6 +59,8 @@ def bot(scheduler):
         yf_stock = yf_stock.tickers
         current_year = datetime.now().year
 
+        print(yf_stock['AAPL'].fast_info)
+
         current_date = datetime.now()
         last_week_date = current_date - timedelta(days=current_date.weekday() + 7)
         last_week_formatted = last_week_date.strftime("%Y-%m-%d")
