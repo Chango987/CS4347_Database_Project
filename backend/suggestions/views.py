@@ -15,7 +15,7 @@ from stocks.views import UserStockSerializer, StocksSerializer
 from .models import StockSuggestion
 
 class StockSuggestionSerializer(serializers.ModelSerializer):
-    stock = StocksSerializer
+    stock = StocksSerializer()
 
     class Meta:
         model = StockSuggestion
