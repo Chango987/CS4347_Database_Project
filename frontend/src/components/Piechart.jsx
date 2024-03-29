@@ -124,7 +124,7 @@ const Piechart = () => {
                         style={{
                             width: '20px',
                             height: '20px',
-                            backgroundColor: 'red',
+                            backgroundColor: '#FFBB28',
                             display: 'inline-block',
                             marginRight: '0.5rem',
                             borderRadius: '1rem',
@@ -137,7 +137,7 @@ const Piechart = () => {
                         style={{
                             width: '20px',
                             height: '20px',
-                            backgroundColor: 'blue',
+                            backgroundColor: '#00C49F',
                             display: 'inline-block',
                             marginRight: '0.5rem',
                             borderRadius: '1rem',
@@ -150,7 +150,7 @@ const Piechart = () => {
                         style={{
                             width: '20px',
                             height: '20px',
-                            backgroundColor: 'yellow',
+                            backgroundColor: '#0088FE',
                             display: 'inline-block',
                             marginRight: '0.5rem',
                             borderRadius: '1rem',

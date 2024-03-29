@@ -9,10 +9,6 @@ function Dashboard() {
         <br />
 
             <Dropdown/>
-
-            <Dropdown/>
-
-            <Dropdown/>
         </div>
     );
 }

@@ -128,7 +128,7 @@ const StockGen = () => {
             function() {
                 getOtherStocks();
                 getUserStocks();
-            }, 30 * 1000
+            }, 10 * 1000
         );
         getUserPort();
         getCash();

@@ -1,51 +1,44 @@
-import { useState, useEffect } from 'react';
-import { backendURL, getAuthHeader } from '../utils';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
+import { backendURL, getAuthHeader } from '../utils'; // Import backendURL and getAuthHeader from your utils file
 
 const Dropdown = () => {
-    const [stockHistory, setStockHistory] = useState([]);
+    const [suggestedStocks, setSuggestedStocks] = useState([]);
 
     useEffect(() => {
-        const fetchStockHistory = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get(`${backendURL}/stocks_suggestions/`, {
-                    headers: getAuthHeader()
-                });
-
-                if (response.status !== 200) {
-                    throw new Error('Failed to fetch stock history');
-                }
-
-                const data = response.data;
-
-                // do we have a history field in db??
-                setStockHistory(data.history);
-
-                console.log('Stock history fetched successfully:', data.history);
+                // Fetch suggested stocks
+                const response = await axios.get(`${backendURL}/stocks_suggestions/`, getAuthHeader());
+                setSuggestedStocks(response.data);
             } catch (error) {
-                console.error('Error fetching stock history:', error);
+                console.error('Error fetching data:', error);
             }
         };
 
-        fetchStockHistory();
+        fetchData();
     }, []);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
-                <div className="collapse-title text-xl font-medium">
-                    Transaction History
-                </div>
-                <div className="collapse-content">
-                    <ul>
-                        {stockHistory.map((transaction, index) => (
-                            <li key={index}>
-                                {/* Render transaction details here */}
-                                {transaction.date}: {transaction.symbol} - {transaction.price}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+        <div>
+            <h2>Suggested Stocks</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {suggestedStocks.map((suggestedStock, index) => (
+                    <div key={index} style={{ flex: '0 0 30%', margin: '10px', border: '1px solid #ccc', borderRadius:'10px', padding: '10px', backgroundColor:'#FFFFFFD9', boxShadow: '2px 2px 4px 1px rgba(0, 0, 0, 0.2)' }}>
+                        <h3>Stock</h3>
+                        <p>Ticker: {suggestedStock.stock.ticker}</p>
+                        <p>Name: {suggestedStock.stock.name}</p>
+                        <p>Price: {suggestedStock.stock.price}</p>
+                        <p>Week Growth: {suggestedStock.stock.week_growth}</p>
+                        <p>Five Year Growth: {suggestedStock.stock.five_year_growth}</p>
+                        <p>Cap Size: {suggestedStock.stock.cap_size}</p>
+                        <h3>Additional Information</h3>
+                        <p>Iteration: {suggestedStock.iteration}</p>
+                        <p>Shares: {suggestedStock.shares}</p>
+                        <p>Price Per Share: {suggestedStock.price_per_share}</p>
+                        <p>Creation Time: {new Date(suggestedStock.creation_time).toLocaleString()}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );
