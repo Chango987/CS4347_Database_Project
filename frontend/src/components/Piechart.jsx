@@ -29,23 +29,23 @@ const renderCustomizedLabel = ({
 
     return (
         <>
-        <text
-            x={x}
-            y={y}
-            fill="white"
-            textAnchor={x > cx ? 'start' : 'end'}
-            dominantBaseline="central"
-        >
-            {`${(percent * 100).toFixed(0)}%`}
-        </text>
-        <text
-            x={x}
-            y={y + 20}
-            fill="#888"
-            textAnchor={x > cx ? 'start' : 'end'}
-            dominantBaseline="central"
-            fontSize="12"
-        ></text>
+            <text
+                x={x}
+                y={y}
+                fill="white"
+                textAnchor={x > cx ? 'start' : 'end'}
+                dominantBaseline="central"
+            >
+                {`${(percent * 100).toFixed(0)}%`}
+            </text>
+            <text
+                x={x}
+                y={y + 20}
+                fill="#888"
+                textAnchor={x > cx ? 'start' : 'end'}
+                dominantBaseline="central"
+                fontSize="12"
+            ></text>
         </>
     );
 };
@@ -108,84 +108,84 @@ const Piechart = () => {
 
     return (
         <>
-        <div
-            className="main-container"
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '20px',
-            }}
-        >
-            <div className="pie-container">
-                <ul style={{ listStyleType: 'none', padding: 0 }}>
-                    <li style={{ marginBottom: '1rem' }}>
-                        <div
-                        style={{
-                            width: '20px',
-                            height: '20px',
-                            backgroundColor: '#FFBB28',
-                            display: 'inline-block',
-                            marginRight: '0.5rem',
-                            borderRadius: '1rem',
-                        }}
-                        ></div>
+            <div
+                className="main-container"
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '20px',
+                }}
+            >
+                <div className="pie-container">
+                    <ul style={{ listStyleType: 'none', padding: 0 }}>
+                        <li style={{ marginBottom: '1rem' }}>
+                            <div
+                                style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    backgroundColor: '#FFBB28',
+                                    display: 'inline-block',
+                                    marginRight: '0.5rem',
+                                    borderRadius: '1rem',
+                                }}
+                            ></div>
                         Large Cap
-                    </li>
-                    <li style={{ marginBottom: '1rem' }}>
-                        <div
-                        style={{
-                            width: '20px',
-                            height: '20px',
-                            backgroundColor: '#00C49F',
-                            display: 'inline-block',
-                            marginRight: '0.5rem',
-                            borderRadius: '1rem',
-                        }}
-                        ></div>
+                        </li>
+                        <li style={{ marginBottom: '1rem' }}>
+                            <div
+                                style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    backgroundColor: '#00C49F',
+                                    display: 'inline-block',
+                                    marginRight: '0.5rem',
+                                    borderRadius: '1rem',
+                                }}
+                            ></div>
                         Medium Cap
-                    </li>
-                    <li>
-                        <div
-                        style={{
-                            width: '20px',
-                            height: '20px',
-                            backgroundColor: '#0088FE',
-                            display: 'inline-block',
-                            marginRight: '0.5rem',
-                            borderRadius: '1rem',
-                        }}
-                        ></div>
+                        </li>
+                        <li>
+                            <div
+                                style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    backgroundColor: '#0088FE',
+                                    display: 'inline-block',
+                                    marginRight: '0.5rem',
+                                    borderRadius: '1rem',
+                                }}
+                            ></div>
                         Small Cap
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
 
-                <PieChart width={400} height={400}>
-                    <Pie
-                        data={spread}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        label={renderCustomizedLabel}
-                        outerRadius={150}
-                        fill="#8884d8"
-                        dataKey="value"
-                    >
-                    {data.map((entry, index) => (
-                        <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                        />
-                    ))}
-                    </Pie>
-                </PieChart>
-            </div>
+                    <PieChart width={400} height={400}>
+                        <Pie
+                            data={spread}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={renderCustomizedLabel}
+                            outerRadius={150}
+                            fill="#8884d8"
+                            dataKey="value"
+                        >
+                            {data.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={COLORS[index % COLORS.length]}
+                                />
+                            ))}
+                        </Pie>
+                    </PieChart>
+                </div>
 
-            <div className="performers">
-                <h3>Top 5 performers</h3>
-                <StockStatsTable />
+                <div className="performers">
+                    <h3>Top 5 performers</h3>
+                    <StockStatsTable />
+                </div>
             </div>
-        </div>
         </>
     );
 };

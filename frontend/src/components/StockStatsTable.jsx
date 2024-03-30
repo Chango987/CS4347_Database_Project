@@ -10,7 +10,6 @@ const StockStatsTable = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${backendURL}/stocks/`, getAuthHeader());
-                console.log('Fetched Data:', response.data);
                 const sortedData = response.data.sort((a, b) => b.week_growth - a.week_growth);
                 setData(sortedData.slice(0, 5));
             } catch (error) {

@@ -1,6 +1,6 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { backendURL, getAuthHeader } from '../utils'; // Import backendURL and getAuthHeader from your utils file
+import { backendURL, getAuthHeader } from '../utils';
 
 const Dropdown = () => {
     const [suggestedStocks, setSuggestedStocks] = useState([]);

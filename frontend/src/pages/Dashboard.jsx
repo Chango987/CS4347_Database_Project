@@ -6,7 +6,7 @@ function Dashboard() {
     return (
         <div className="dashboard-page">
             <Piechart />
-        <br />
+            <br />
 
             <Dropdown/>
         </div>

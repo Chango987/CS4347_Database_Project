@@ -10,15 +10,10 @@ import Navbar from './components/Navbar';
 import SignUp from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
-import { useEffect } from 'react';
-import { backendURL } from './utils';
 import StockGen from './pages/StockGen';
 import Footer from './components/Footer';
 
 function App() {
-    useEffect(() => {
-        console.log(backendURL);
-    }, []);
     return (
         <BrowserRouter>
             <Navbar />
