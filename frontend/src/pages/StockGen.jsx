@@ -62,9 +62,9 @@ const StockGen = () => {
         try {
             const resp = await axios.post(`${backendURL}/stocks_suggestions/`, {
                 cap_size_portfolio: JSON.stringify({
-                    large_cap: userPort.large_cap_percentage,
-                    medium_cap: userPort.medium_cap_percentage,
-                    small_cap: userPort.small_cap_percentage,
+                    large_cap: userPort.large_cap_percentage ?? 0,
+                    medium_cap: userPort.medium_cap_percentage ?? 0,
+                    small_cap: userPort.small_cap_percentage ?? 0,
                 }),
                 buying_power: parseFloat(buyPower),
             }, auth);
@@ -128,7 +128,7 @@ const StockGen = () => {
             function() {
                 getOtherStocks();
                 getUserStocks();
-            }, 30 * 1000
+            }, 10 * 1000
         );
         getUserPort();
         getCash();

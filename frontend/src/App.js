@@ -8,28 +8,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import SignIn from './pages/SignIn';
 import Navbar from './components/Navbar';
 import SignUp from './pages/Signup';
+import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
-import { useEffect } from 'react';
-import { backendURL } from './utils';
 import StockGen from './pages/StockGen';
+import Footer from './components/Footer';
 
 function App() {
-    useEffect(() => {
-        console.log(backendURL);
-    }, []);
     return (
         <BrowserRouter>
             <Navbar />
             <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/signup" element={<SignUp />} />
                 <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
                 <Route path="/stockgen" element={<StockGen />} />
+                <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
             <ToastContainer
                 autoClose={2000}
                 position="bottom-right"
             />
+            <Footer />
         </BrowserRouter>
     );
 }

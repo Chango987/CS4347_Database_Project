@@ -19,6 +19,11 @@ const Navbar = () => {
                     </a>
                 </li>
                 <li style={liStyle}>
+                    <a href="/dashboard" style={linkStyle}>
+                        Dashboard
+                    </a>
+                </li>
+                <li style={liStyle}>
                     <a href="/stockgen" style={linkStyle}>
                         Suggestion engine
                     </a>
