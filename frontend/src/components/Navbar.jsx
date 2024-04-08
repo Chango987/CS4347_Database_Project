@@ -12,73 +12,68 @@ const Navbar = () => {
 
     return (
         <nav style={navStyle}>
-            <ul style={ulStyle}>
-                <li style={liStyle}>
-                    <a href="/" style={linkStyle}>
-                        Home
-                    </a>
-                </li>
-                <li style={liStyle}>
-                    <a href="/dashboard" style={linkStyle}>
-                        Dashboard
-                    </a>
-                </li>
-                <li style={liStyle}>
-                    <a href="/stockgen" style={linkStyle}>
-                        Suggestion engine
-                    </a>
-                </li>
-                <li style={liStyle}>
-                    <a href="#" style={linkStyle}>
-                        About
-                    </a>
-                </li>
-                <li style={liStyle}>
-                    <a href="/ContactUsPage" style={linkStyle}>
-                        Contact
-                    </a>
-                </li>
+            <div style={ulStyle}>
+                <a href="/" style={linkStyle}>
+                    Home
+                </a>
+                <a href="/dashboard" style={linkStyle}>
+                    Dashboard
+                </a>
+                <a href="/stockgen" style={linkStyle}>
+                    Suggestion engine
+                </a>
+                <a href="#" style={linkStyle}>
+                    About
+                </a>
+                <a href="/ContactUsPage" style={linkStyle}>
+                    Contact
+                </a>
                 {token ?
-                    <li style={liStyle}>
-                        <a style={linkStyle} onClick={handleLogOut}>
-                            Sign out
-                        </a>
-                    </li>
+                    <a style={linkStyle} onClick={handleLogOut}>
+                        Sign out
+                    </a>
                     :
-                    <li style={liStyle}>
-                        <a style={linkStyle} onClick={() => navigate('/signin')}>
-                            Sign in
-                        </a>
-                    </li>
+                    <a style={linkStyle} onClick={() => navigate('/signin')}>
+                        Sign in
+                    </a>
                 }
-            </ul>
+            </div>
+            <a style={menuStyle} href="/setting">
+                <span className="material-symbols-outlined">
+                    menu
+                </span>
+            </a>
         </nav>
     );
 };
 
 // Styles
+
+const menuStyle = {
+    position: 'absolute',
+    right: '20px'
+};
+
 const navStyle = {
     background: 'var(--dark)',
     padding: '20px',
     textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center'
 };
 
 const ulStyle = {
-    listStyle: 'none',
     padding: 0,
     margin: 0,
     display: 'flex',
     justifyContent: 'center',
-};
-
-const liStyle = {
-    margin: '0 15px',
+    gap: '40px'
 };
 
 const linkStyle = {
     color: 'white',
     textDecoration: 'none',
-    padding: '10px',
+    padding: '0',
     cursor: 'pointer',
 };
 

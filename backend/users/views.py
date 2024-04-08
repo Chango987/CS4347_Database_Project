@@ -17,7 +17,7 @@ class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "id",
+            # "id",
             "email",
             "first_name",
             "last_name"
@@ -68,7 +68,8 @@ class ViewUsers(APIView):
         connection.commit()
 
         return Response(status=status.HTTP_201_CREATED)
-    
+
+
 @permission_classes([IsAuthenticated])
 @api_view(['PATCH'])
 def user_edit_profile(request):
@@ -93,7 +94,22 @@ def user_edit_profile(request):
         cursor.execute(sql_statement, [email, first_name, last_name, password, user.id])
 
     return Response(status=status.HTTP_200_OK)
+
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def user_get_profile(request):
+    user = request.user
+    sql_statement = f"""
+        SELECT *
+        FROM users_user
+        WHERE id = %s
+    """
+
+    user_obj = User.objects.raw(sql_statement, [user.id])[0]
+    user_obj = UsersSerializer(user_obj).data
     
+    return Response(user_obj)
 
 class UserPortfolioSerializer(serializers.ModelSerializer):
     class Meta:

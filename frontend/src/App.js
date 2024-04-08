@@ -12,7 +12,8 @@ import Dashboard from './pages/Dashboard';
 import ContactUsPage from './pages/ContactUsPage';
 import LandingPage from './pages/LandingPage';
 import StockGen from './pages/StockGen';
-import Footer from './components/Footer';
+import SettingPage from './pages/SettingPage';
+// import Footer from './components/Footer';
 
 function App() {
     return (
@@ -25,12 +26,12 @@ function App() {
                 <Route path="/contactuspage" element={<ContactUsPage />} />
                 <Route path="/stockgen" element={<StockGen />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/setting" element={<SettingPage />} />
             </Routes>
             <ToastContainer
                 autoClose={2000}
                 position="bottom-right"
             />
-            <Footer />
         </BrowserRouter>
     );
 }

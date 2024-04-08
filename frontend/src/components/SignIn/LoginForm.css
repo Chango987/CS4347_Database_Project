@@ -1,4 +1,4 @@
-.sign-in-up-form, .common-input {
+.sign-in-up-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -6,7 +6,7 @@
     background-color: rgba(255, 255, 255, 0.85);
     padding: 20px 30px;
     backdrop-filter: blur(3px);
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.083);
     border-radius: 20px;
 
     & input[type="text"],
