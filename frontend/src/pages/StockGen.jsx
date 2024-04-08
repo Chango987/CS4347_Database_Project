@@ -49,7 +49,7 @@ const StockGen = () => {
     const getCash = async () => {
         try {
             const resp = await axios.get(`${backendURL}/user_cash_balance/`, auth);
-            setCash(resp.data);
+            setCash(resp.data.current_cash_balance);
         } catch (err) {
             console.error(err);
         }
@@ -270,7 +270,7 @@ const StockGen = () => {
                             <h3>
                                 <input
                                     type='number'
-                                    value={cash && cash.current_cash_balance}
+                                    value={cash && cash}
                                     onChange={inputCashChange}
                                 />
                                 $
