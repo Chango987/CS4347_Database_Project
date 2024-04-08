@@ -38,13 +38,18 @@ const SettingPage = () => {
     };
 
     const submitForm = async (e) => {
-        console.log(e);
         e.preventDefault();
 
-        if (submitForm.confirmPassword !== submitForm.password) {
+        if (updateForm.password.length < 5) {
+            toast.error('Password must not be empty');
+            return;
+        }
+
+        if (updateForm.confirmPassword != updateForm.password) {
             toast.error('Passwords don\'t match');
             return;
         }
+
         try {
             await axios.patch(
                 `${backendURL}/user_edit_profile/`,
@@ -101,19 +106,21 @@ const SettingPage = () => {
                 />
 
                 <input
-                    type='text'
+                    type='password'
                     placeholder='password'
                     name='password'
                     value={updateForm.password}
                     onChange={inputChange}
+                    required
                 />
 
                 <input
-                    type='text'
+                    type='password'
                     placeholder='confirm password'
                     name='confirmPassword'
                     value={updateForm.confirmPassword}
                     onChange={inputChange}
+                    required
                 />
 
                 <button className="submitButton" type="submit">
