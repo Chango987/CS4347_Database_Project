@@ -35,7 +35,8 @@ GET: auth
 POST: auth
 ```
 data: {
-    stocks_id
+    stocks_id,
+    shares (optional)
 }
 ```
 
@@ -88,3 +89,6 @@ data: {
     buying_power,
 }
 ```
+
+### /user_cash_balance/
+GET: auth
