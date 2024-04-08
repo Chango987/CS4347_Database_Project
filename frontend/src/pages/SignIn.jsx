@@ -2,7 +2,7 @@
 import './Home.css';
 import LoginForm from '../components/SignIn/LoginForm';
 
-function Home() {
+function SignIn() {
     return (
         <div className='home-page'>
             <LoginForm />
@@ -10,4 +10,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default SignIn;
