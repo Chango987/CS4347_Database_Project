@@ -38,11 +38,11 @@ const Navbar = () => {
                     </a>
                 }
             </div>
-            <a style={menuStyle} href="/setting">
+            {token && <a style={menuStyle} href="/setting">
                 <span className="material-symbols-outlined">
                     menu
                 </span>
-            </a>
+            </a>}
         </nav>
     );
 };

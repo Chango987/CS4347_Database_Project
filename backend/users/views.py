@@ -67,6 +67,37 @@ class ViewUsers(APIView):
             cursor.execute(sql_statement, [email, password, first_name, last_name])
         connection.commit()
 
+        uuid = User.objects.get(email=email).id
+        print(uuid)
+
+        sql_statement = """
+            insert into users_userportfolio (
+                small_cap_percentage,
+                medium_cap_percentage,
+                large_cap_percentage,
+                user_id
+            )
+            values
+                (33.33, 33.33, 33.33, %s)
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(sql_statement, [uuid])
+        connection.commit()
+
+        sql_statement = """
+            insert into users_usercashbalance (
+                current_cash_balance,
+                proj_1year_balance,
+                proj_5year_balance,
+                user_id
+            )
+            values
+                (0, 0, 0, %s)
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(sql_statement, [uuid])
+        connection.commit()
+
         return Response(status=status.HTTP_201_CREATED)
 
 
