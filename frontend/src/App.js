@@ -9,6 +9,7 @@ import SignIn from './pages/SignIn';
 import Navbar from './components/Navbar';
 import SignUp from './pages/Signup';
 import Dashboard from './pages/Dashboard';
+import ContactUsPage from './pages/ContactUsPage';
 import LandingPage from './pages/LandingPage';
 import StockGen from './pages/StockGen';
 import Footer from './components/Footer';
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/contactuspage" element={<ContactUsPage />} />
                 <Route path="/stockgen" element={<StockGen />} />
                 <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
