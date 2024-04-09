@@ -41,7 +41,7 @@ const SettingPage = () => {
         e.preventDefault();
 
         if (updateForm.password.length < 5) {
-            toast.error('Password must not be empty');
+            toast.error('Password is too short');
             return;
         }
 
