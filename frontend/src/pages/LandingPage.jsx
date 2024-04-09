@@ -8,10 +8,6 @@ export default function LandingPage() {
                     <h1>Empowering Your Financial Journey.</h1>
                     <p>Secure and innovative solutions to manage your finances, wherever you are.</p>
                 </div>
-                <div className="hero-image">
-                    {/* Ensure the src attribute points to your actual image */}
-                    <img src="path-to-your-image.png" alt="Financial Illustration" />
-                </div>
                 <button className="cta">Get started</button>
             </div>
             {/* More sections go here */}

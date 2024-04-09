@@ -8,9 +8,13 @@ import { toast } from 'react-toastify';
 const StockGen = () => {
     const [otherStocks, setOtherStocks] = useState([]);
     const [userStocks, setUserStocks] = useState([]);
-    const [userPort, setUserPort] = useState(null);
+    const [userPort, setUserPort] = useState({
+        small_cap_percentage: '',
+        medium_cap_percentage: '',
+        large_cap_percentage: ''
+    });
     const [buyPower, setBuyPower] = useState('');
-    const [cash, setCash] = useState(null);
+    const [cash, setCash] = useState('');
     const [showSug, setShowSug] = useState(false);
     const [suggestion, setSuggestion] = useState([]);
     const auth = getAuthHeader();
@@ -45,7 +49,7 @@ const StockGen = () => {
     const getCash = async () => {
         try {
             const resp = await axios.get(`${backendURL}/user_cash_balance/`, auth);
-            setCash(resp.data);
+            setCash(resp.data.current_cash_balance);
         } catch (err) {
             console.error(err);
         }
@@ -121,6 +125,44 @@ const StockGen = () => {
         getCash();
     };
 
+    const inputCashChange = (e) => {
+        const val = e.target.value;
+        setCash(val);
+    };
+
+    const inputPercentChange = (e) => {
+        const val = e.target.value;
+        const name = e.target.name;
+
+        setUserPort(prev => {
+            return { ...prev, [name]: val };
+        });
+    };
+
+    const updatePortfolio = async (e) => {
+        e.preventDefault();
+        const sum = parseFloat(userPort.large_cap_percentage) + parseFloat(userPort.medium_cap_percentage) + parseFloat(userPort.small_cap_percentage);
+
+        if (Math.ceil(sum) > 100 || Math.ceil(sum) < 100) {
+            toast.error('The total of you portfolio must be 100%');
+            return;
+        }
+
+        axios.patch(
+            `${backendURL}/user_portfolio/`,
+            userPort,
+            getAuthHeader()
+        );
+
+        axios.put(
+            `${backendURL}/user_cash_balance/`,
+            { current_cash_balance: cash },
+            getAuthHeader()
+        );
+
+        toast.success('yay');
+    };
+
     useState(() => {
         getOtherStocks();
         getUserStocks();
@@ -193,23 +235,51 @@ const StockGen = () => {
                             <div className='portfolio-side'>
                                 <div className='portfolio-field'>
                                     <p>Small</p>
-                                    <p>{userPort.small_cap_percentage}%</p>
+                                    <input
+                                        type='number'
+                                        value={userPort.small_cap_percentage}
+                                        name='small_cap_percentage'
+                                        onChange={inputPercentChange}
+                                    />
+                                    <p>%</p>
                                 </div>
                                 <div className='portfolio-field'>
                                     <p>Medium</p>
-                                    <p>{userPort.medium_cap_percentage}%</p>
+                                    <input
+                                        type='number'
+                                        value={userPort.medium_cap_percentage}
+                                        name='medium_cap_percentage'
+                                        onChange={inputPercentChange}
+                                    />
+                                    <p>%</p>
                                 </div>
                                 <div className='portfolio-field'>
                                     <p>Large</p>
-                                    <p>{userPort.large_cap_percentage}%</p>
+                                    <input
+                                        type='number'
+                                        value={userPort.large_cap_percentage}
+                                        name='large_cap_percentage'
+                                        onChange={inputPercentChange}
+                                    />
+                                    <p>%</p>
                                 </div>
                             </div>
                         }
                         <div className='cash-side'>
                             <p>Available cash</p>
-                            <h3>${cash && cash.current_cash_balance}</h3>
+                            <h3>
+                                <input
+                                    type='number'
+                                    value={cash && cash}
+                                    onChange={inputCashChange}
+                                />
+                                $
+                            </h3>
                         </div>
                     </div>
+                    <button onClick={updatePortfolio}>
+                        Update portfolio
+                    </button>
                     <input
                         className="inputField"
                         type="numeric"
